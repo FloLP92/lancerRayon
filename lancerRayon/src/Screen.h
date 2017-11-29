@@ -11,21 +11,24 @@
 
 class Screen {
 private :
-	Coord3 coord3;
 	RGB color;
-	float tpCorner;
-	float blCorner;
+	Coord3 tlCorner;
+	Coord3 trCorner;
+	Coord3 blCorner;
+	Coord3 brCorner;
 	float horRes;
 	float verRes;
 public:
-	Screen(Coord3 chCoord3, RGB chColor, float chTpCorner, float chBlCorner, float chHorRes, float chVerRes);
+	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, float chHorRes, float chVerRes);
 	virtual ~Screen();
-	Coord3 getCoord3();
-	RGB getColor();
-	float getTpCorner();
-	float getBlCorner();
-	float getHorResolution();
-	float getVerResolution();
+	void calculBrCorner();
+
+	Coord3 getCoord3() const;
+	RGB getColor() const;
+	float getTpCorner() const;
+	float getBlCorner() const;
+	float getHorResolution() const;
+	float getVerResolution() const;
 };
 
 #endif /* SCREEN_H_ */

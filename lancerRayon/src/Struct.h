@@ -8,6 +8,11 @@
 #ifndef STRUCT_H_
 #define STRUCT_H_
 
+struct image_t{
+	int width,height,vmax;
+	unsigned int* dataPixel;
+};
+
 struct RGB {
    int red;
    int green;
