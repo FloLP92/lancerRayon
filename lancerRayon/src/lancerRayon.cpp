@@ -16,7 +16,7 @@ int main() {
 	Coord3 camera;
 	Coord3 light;
 	RGB colorLight;
-
+//aaa
 
 
 
