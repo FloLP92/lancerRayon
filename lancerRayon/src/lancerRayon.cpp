@@ -27,7 +27,6 @@ int main() {
 Coord3 equaRay(Coord3 chCamera, Coord3 chLight)
 {
 	Coord3 ray;
-	ray.x =
 }
 
 
