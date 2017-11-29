@@ -7,15 +7,25 @@
 
 #ifndef SCREEN_H_
 #define SCREEN_H_
-
-namespace std {
+#include "Struct.h"
 
 class Screen {
+private :
+	Coord3 coord3;
+	RGB color;
+	float tpCorner;
+	float blCorner;
+	float horRes;
+	float verRes;
 public:
-	Screen();
+	Screen(Coord3 chCoord3, RGB chColor, float chTpCorner, float chBlCorner, float chHorRes, float chVerRes);
 	virtual ~Screen();
+	Coord3 getCoord3();
+	RGB getColor();
+	float getTpCorner();
+	float getBlCorner();
+	float getHorResolution();
+	float getVerResolution();
 };
-
-} /* namespace std */
 
 #endif /* SCREEN_H_ */

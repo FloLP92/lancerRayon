@@ -7,15 +7,20 @@
 
 #ifndef SPHERE_H_
 #define SPHERE_H_
-
-namespace std {
+#include "Struct.h"
 
 class Sphere {
+private :
+	float radius;
+	Coord3 coord3;
+	float surface;
+	float reflexion;
 public:
-	Sphere();
+	Sphere(float chRadius, Coord3 chCoord3, float chSurface, float chReflexion);
 	virtual ~Sphere();
+	float getRadius();
+	Coord3 getCoord3();
+	float getSurface();
 };
-
-} /* namespace std */
 
 #endif /* SPHERE_H_ */

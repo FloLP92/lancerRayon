@@ -7,15 +7,16 @@
 
 #include "Screen.h"
 
-namespace std {
 
-Screen::Screen() {
-	// TODO Auto-generated constructor stub
-
+Screen::Screen(Coord3 chCoord3, RGB chColor, float chTpCorner, float chBlCorner, float chHorRes, float chVerRes){
+	coord3 = chCoord3;
+	color = chColor;
+	tpCorner = chTpCorner;
+	blCorner = chBlCorner;
+	horRes = chHorRes;
+	verRes = chVerRes;
 }
 
 Screen::~Screen() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */
