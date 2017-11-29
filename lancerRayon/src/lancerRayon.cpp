@@ -13,11 +13,26 @@
 using namespace std;
 
 int main() {
+	Coord3 camera;
+	Coord3 light;
+	RGB colorLight;
+
+
+
+
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;
 }
 
-//take an image_t and write it on a pgm file
+Coord3 equaRay(Coord3 chCamera, Coord3 chLight)
+{
+	Coord3 ray;
+	ray.x =
+}
+
+
+
+//take an image_t and write it on a ppm file
 void write_image(image_t* img,char* nameFile)
 {
 	FILE* pgmFile = NULL;
@@ -29,7 +44,7 @@ void write_image(image_t* img,char* nameFile)
         exit(EXIT_FAILURE);
     }
 	//
-	fprintf(pgmFile, "P2\n%d %d\n%d\n",(*img).width,(*img).height,(*img).vmax);
+	fprintf(pgmFile, "P3\n%d %d\n%d\n",(*img).width,(*img).height,(*img).vmax);
 	for (i=0; i<(*img).height; ++i)
 	{
 		for (j=0;j<(*img).width; ++j)
