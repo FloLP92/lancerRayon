@@ -11,6 +11,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <boost/algorithm/string.hpp>
+#include "Light.h"
 
 using namespace std;
 
@@ -23,7 +24,9 @@ void lecture(){
 	{
 	    std::istringstream iss(line);
 	    string a,infos;
+	    Light l();
 	   	string aP,bP,cP,dP,eP,fP,gP,hP;
+	   	float aF,bF,cF,dF,eF,fF,gF,hF;
 	    if (!(iss >> a)) { break; } // error
 	    else if(a.compare("#")!=0){ // on lit une donnée
 	    	dataRead++;
@@ -71,6 +74,12 @@ void lecture(){
 	    			dP.erase (std::remove(dP.begin(), dP.end(),','), dP.end());
 	    			eP.erase (std::remove(eP.begin(), eP.end(),','), eP.end());
 	    			fP.erase (std::remove(fP.begin(), fP.end(),','), fP.end());
+	    			aF = strtof(aP.c_str(),0);
+	    			bF = strtof(bP.c_str(),0);
+	    			cF = strtof(cP.c_str(),0);
+	    			dF = strtof(dP.c_str(),0);
+	    			eF = strtof(eP.c_str(),0);
+	    			fF = strtof(fP.c_str(),0);
 	    			cout << aP << " " << bP << " " << cP << " " << dP << " " << eP << " " << fP <<endl;
 	    			break;
 	    		default : //Create Circles (just them for the moment)
@@ -85,13 +94,19 @@ void lecture(){
 	    			hP.erase (std::remove(hP.begin(), hP.end(),','), hP.end());
 	    			cout << infos << " " << bP << " " << cP << " " << dP << " " << eP << " " << fP << " " << gP << " " << hP <<endl;
 	    			break;
-	    	}
-	    }
-	}
+	    	}//end switch
+	    }// end if comment
+	}// end while read
+
 }
 
 
-void write_image(){
-
+void write_image(){ //Creation du fichier ppm
+	std::ofstream outfile;
+	outfile.open("new.ppm");
+	outfile<<"P6\n";
+	outfile<<"4 4\n";
+	outfile<<"15\n";
+	outfile.close();
 }
 

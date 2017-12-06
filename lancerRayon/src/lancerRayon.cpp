@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Struct.h"
+#include "Parsing.h"
 using namespace std;
 
 int main() {
@@ -17,7 +18,7 @@ int main() {
 	Coord3 light;
 	RGB colorLight;
 //aaa
-
+	write_image();
 
 
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
