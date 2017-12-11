@@ -4,18 +4,30 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/Light.cpp \
+../src/Parsing.cpp \
+../src/Rayon.cpp \
 ../src/Screen.cpp \
 ../src/Sphere.cpp \
+../src/Struct.cpp \
 ../src/lancerRayon.cpp 
 
 OBJS += \
+./src/Light.o \
+./src/Parsing.o \
+./src/Rayon.o \
 ./src/Screen.o \
 ./src/Sphere.o \
+./src/Struct.o \
 ./src/lancerRayon.o 
 
 CPP_DEPS += \
+./src/Light.d \
+./src/Parsing.d \
+./src/Rayon.d \
 ./src/Screen.d \
 ./src/Sphere.d \
+./src/Struct.d \
 ./src/lancerRayon.d 
 
 
