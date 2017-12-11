@@ -20,8 +20,12 @@ struct RGB {
    int blue;
  };
 
-
-struct Coord3;
+struct Coord3{
+	float x;
+	float y;
+	float z;
+};
+Coord3 createCoord3(float x,float y,float z);
 
 
 #endif /* STRUCT_H_ */

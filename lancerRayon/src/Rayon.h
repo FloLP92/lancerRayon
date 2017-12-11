@@ -7,6 +7,9 @@
 
 #ifndef RAYON_H_
 #define RAYON_H_
+#include "Struct.h"
+#include <vector>
+#include <iostream>
 
 class Rayon {
 
@@ -16,7 +19,7 @@ private:
 public:
 	Rayon();
 	virtual ~Rayon();
-	bool calculPtIntersection(Coord3 ptOrigine,std::vector<float> vectDirecteur,float RayonSphere);
+	bool calculPtIntersection(Coord3 ptSphere,std::vector<float> vectDirecteur,float RayonSphere);
 };
 
 #endif /* RAYON_H_ */

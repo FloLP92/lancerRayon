@@ -7,7 +7,7 @@
 
 #include "Rayon.h"
 #include <math.h>
-
+#include <iostream>
 Rayon::Rayon() {
 	// TODO Auto-generated constructor stub
 
@@ -43,9 +43,9 @@ bool Rayon::calculPtIntersection(Coord3 ptSphere,std::vector<float> vectDirecteu
 	//coordonnees du (des) point(s) trouves
 	std::vector <Coord3> coordonnees;
 	for(int i=0;i<solution.size();i++){
-		float x= vectDirecteur[0]*solution; // (+ptorigine.x)
-		float y= vectDirecteur[1]*solution; // (+ptorigine.y)
-		float z= vectDirecteur[2]*solution; // (+ptorigine.z)
+		float x= vectDirecteur[0]*solution[i]; // (+ptorigine.x)
+		float y= vectDirecteur[1]*solution[i]; // (+ptorigine.y)
+		float z= vectDirecteur[2]*solution[i]; // (+ptorigine.z)
 		Coord3 c = createCoord3(x, y, z);
 		coordonnees.push_back(c);
 	}
