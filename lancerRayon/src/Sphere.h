@@ -12,14 +12,14 @@
 class Sphere {
 private :
 	float radius;
-	Coord3 coord3;
+	Coord3 center;
 	float surface;
 	float reflexion;
 public:
-	Sphere(float chRadius, Coord3 chCoord3, float chSurface, float chReflexion);
+	Sphere(float chRadius, Coord3 chCenter, float chSurface, float chReflexion);
 	virtual ~Sphere();
 	float getRadius();
-	Coord3 getCoord3();
+	Coord3 getCenter();
 	float getSurface();
 };
 

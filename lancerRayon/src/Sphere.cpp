@@ -9,7 +9,7 @@
 
 Sphere::Sphere(float chRadius, Coord3 chCoord3, float chSurface, float chReflexion) {
 	radius = chRadius;
-	coord3 = chCoord3;
+	center = chCoord3;
 	surface = chSurface;
 	reflexion = chReflexion;
 }
@@ -24,6 +24,6 @@ float Sphere::getRadius(){
 float Sphere::getSurface(){
 	return surface;
 }
-Coord3 Sphere::getCoord3(){
-	return coord3;
+Coord3 Sphere::getCenter(){
+	return center;
 }
