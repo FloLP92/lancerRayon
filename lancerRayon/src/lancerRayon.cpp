@@ -11,16 +11,16 @@
 #include <stdlib.h>
 #include "Struct.h"
 #include "Parsing.h"
+#include "Test.h"
 using namespace std;
 
 int main() {
 	Coord3 camera;
 	Coord3 light;
 	RGB colorLight;
-//aaa
+
 	write_image();
-
-
+	Test::test1();
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;
 }

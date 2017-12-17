@@ -8,24 +8,27 @@
 #ifndef STRUCT_H_
 #define STRUCT_H_
 
-
 struct image_t{
-	int width,height,vmax;
-	unsigned int* dataPixel;
+		int width,height,vmax;
+		unsigned int* dataPixel;
 };
-
 struct RGB {
    int red;
    int green;
    int blue;
  };
-
 struct Coord3{
 	float x;
 	float y;
 	float z;
 };
-Coord3 createCoord3(float x,float y,float z);
+
+class Struct {
+public :
+	static void coutCoord3(Coord3 c);
+	static Coord3 createCoord3(float x,float y,float z);
+};
+
 
 
 #endif /* STRUCT_H_ */
