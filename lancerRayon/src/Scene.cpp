@@ -36,22 +36,28 @@ void lecture(){
 	int dataRead = 0; // nombre de données lues
 	while (std::getline(infile, line))
 	{
-	    std::istringstream iss(line);
-	    string a,infos;
+	    std::istringstream iss(line);// tete de lecture
+	    string infos;
 	    Light l();
 	   	string aP,bP,cP,dP,eP,fP,gP,hP;
 	   	float aF,bF,cF,dF,eF,fF,gF,hF;
-	    if (!(iss >> a)) { break; } // error
-	    else if(a.compare("#")!=0){ // on lit une donnée
+
+
+	   	//on commence par lire le premier mot : si il contient # au début c'est un comment donc on passe
+	   	//sinon c'est une donnée utile : on sait quelle donnee utile c'est parce que on a un compteur qui permet
+	   	// de savoir combien de donnees utiles on a lues. (donc ou on en est dans le fichier).
+	   	// et on peut traiter en fonction de ce que c'est (utilisation switch).
+
+	    if (!(iss >> aP)) { break; } // On lit le premier mot de la ligne
+	    else if(aP.compare("#")!=0){ // on ne tombe par sur un commentaire : c'est une donnee utile
 	    	dataRead++; // On incremente le nombre de données utiles lues
-	    	aP = a; // on place la donnee dans notre liste des donnees lues
 	    	aP.erase (std::remove(aP.begin(), aP.end(),','), aP.end()); //on supprimes les , de la ligne
-	    	switch(dataRead){
+	    	switch(dataRead){ // savoir quel type de donnee on va lire (ou on en est dans la lecture du fichier)
 	    		case 1: //Camera position (on lit 2 autres données sur cette ligne)
-	    			iss >> bP >> cP; // on place le reste de la lecture dans des variables
-	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());//on supprimes les , de la ligne
-	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());//on supprimes les , de la ligne
-	    			cout << aP << " " << bP << " " << cP << endl;
+	    			iss >> bP >> cP; // on place le reste des mots de la ligne dans les autres variables
+	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());//on supprime les ',' du mot (on ne veut retenir que les nombre,
+	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());// pas les virgules avec, utile quand on va passer de str a float)
+	    			cout << aP << " " << bP << " " << cP << endl; // on affiche ce qu'on obtient (pour la phase de test)
 	    			break;
 	    		case 2: //Top left corner (on lit 2 autres donnees sur cette ligne)
 	    			iss >> bP >> cP;
@@ -87,12 +93,12 @@ void lecture(){
 	    			dP.erase (std::remove(dP.begin(), dP.end(),','), dP.end());
 	    			eP.erase (std::remove(eP.begin(), eP.end(),','), eP.end());
 	    			fP.erase (std::remove(fP.begin(), fP.end(),','), fP.end());
-	    			aF = strtof(aP.c_str(),0);
+	    			/*aF = strtof(aP.c_str(),0); // partie str -> float
 	    			bF = strtof(bP.c_str(),0);
 	    			cF = strtof(cP.c_str(),0);
 	    			dF = strtof(dP.c_str(),0);
 	    			eF = strtof(eP.c_str(),0);
-	    			fF = strtof(fP.c_str(),0);
+	    			fF = strtof(fP.c_str(),0);*/
 	    			cout << aP << " " << bP << " " << cP << " " << dP << " " << eP << " " << fP <<endl;
 	    			break;
 	    		default : //reste des infos utiles cad la liste des cercles en bas du fichier
