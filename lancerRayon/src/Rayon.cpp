@@ -27,8 +27,8 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::vector
 	float c = ptSphere.x*ptSphere.x+ptSphere.y*ptSphere.y+ptSphere.z*ptSphere.z-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions dedans
 	float delta = b*b-4*a*c; //calcul du delta
-	if(b<0){
-		std::cout << "b";
+	if(delta<0){
+		std::cout << "begin " << a << " " << b << " " << c << " end" << std::endl;
 		return boost::none; // On ne peut pas avoir de solutions dans r
 	}
 	else
@@ -48,7 +48,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::vector
 		}
 		//coordonnees du (des) point(s) trouves
 		boost::optional<Coord3*> coordonnees = new Coord3[solution.size()];
-		for(int i=0;i<solution.size();i++){
+		for(unsigned int i(0);i<solution.size();i++){
 			float x= vectDirecteur[0]*solution[i]; // (+ptorigine.x)
 			float y= vectDirecteur[1]*solution[i]; // (+ptorigine.y)
 			float z= vectDirecteur[2]*solution[i]; // (+ptorigine.z)
