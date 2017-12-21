@@ -17,6 +17,7 @@ public:
 	Test();
 	virtual ~Test();
 	static void test1();
+	static void testParsing();
 };
 
 

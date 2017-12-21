@@ -9,9 +9,6 @@
 
 using namespace std;
 
-Scene::Scene() {
-	// TODO Auto-generated constructor stub
-}
 Scene::~Scene() {
 	// TODO Auto-generated destructor stub
 }
@@ -29,7 +26,7 @@ void Scene::setLight(Light chLight){
 	light = chLight;
 }
 
-void lecture(){
+static void Scene::lecture(){
 	std::ifstream infile("aParser.txt");
 
 	std::string line;
@@ -119,7 +116,7 @@ void lecture(){
 
 }
 
-void write_image(){ //Creation du fichier ppm
+static void Scene::write_image(){ //Creation du fichier ppm
 	std::ofstream outfile;
 	outfile.open("new.ppm");
 	outfile<<"P6\n";

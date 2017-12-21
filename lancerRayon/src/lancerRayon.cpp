@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : lancerRayon.cpp
-// Author      : 
+// Author      :
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
@@ -12,6 +12,7 @@
 #include "Struct.h"
 #include "Parsing.h"
 #include "Test.h"
+#include "Scene.h"
 using namespace std;
 
 int main() {
@@ -19,8 +20,8 @@ int main() {
 	Coord3 light;
 	RGB colorLight;
 
-	write_image();
-	Test::test1();
+	Scene::write_image();
+	Test::testParsing();
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;
 }
@@ -28,6 +29,7 @@ int main() {
 Coord3 equaRay(Coord3 chCamera, Coord3 chLight)
 {
 	Coord3 ray;
+	return ray;
 }
 
 
@@ -43,7 +45,6 @@ void write_image(image_t* img,char* nameFile)
         perror("Error, cannot open file to write");
         exit(EXIT_FAILURE);
     }
-	//
 	fprintf(pgmFile, "P3\n%d %d\n%d\n",(*img).width,(*img).height,(*img).vmax);
 	for (i=0; i<(*img).height; ++i)
 	{

@@ -19,7 +19,9 @@ private :
 	float horRes;
 	float verRes;
 public:
-	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, float chHorRes, float chVerRes);
+	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, float chHorRes, float chVerRes): color(chColor),
+		tlCorner(chTlCorner), trCorner(chTrCorner), blCorner(chBlCorner), horRes(chHorRes), verRes(chVerRes){}
+	Screen(){horRes = 0; verRes = 0;}
 	virtual ~Screen();
 	void calculBrCorner();
 

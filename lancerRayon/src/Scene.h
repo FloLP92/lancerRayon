@@ -14,14 +14,14 @@ private:
 	Coord3 camera;
 	Screen screen;
 public:
-	Scene();
+	Scene(){}
 	virtual ~Scene();
 	Screen getScreen();
 	void setScreen(Screen s);
 	Light getLight();
 	void setLight(Light l);
 	void lecture();
-	void write_image();
+	static void write_image();
 };
 
 #endif /* SCENE_H_ */
