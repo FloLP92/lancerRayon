@@ -85,11 +85,18 @@ bool Rayon::calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coor
 	float no = sqrt(normale[0]*normale[0] + normale[1]*normale[1] + normale[2]*normale[2])*sqrt(rayonIncident[0]*rayonIncident[0] + rayonIncident[1]*rayonIncident[1] + rayonIncident[2]*rayonIncident[2]);
 	cos = cos/no;
 
-
-
-
-
 	return false;
 
 }
 
+RGB Rayon::calculCouleur(Float cos,RGB couleurInter,RGB couleurSource){
+	RGB couleurFinale;
+	couleurFinale.red = couleurInter.red*couleurSource.red;
+	couleurFinale.green = couleurInter.green*couleurSource.green;
+	couleurFinale.blue = couleurInter.blue*couleurSource.blue;
+	couleurFinale.red *= cos;
+	couleurFinale.green *= cos;
+	couleurFinale.blue *= cos;
+	//retravailler float en int
+	return couleurFinale;
+}
