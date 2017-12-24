@@ -26,7 +26,7 @@ void Scene::setLight(Light chLight){
 	light = chLight;
 }
 
-static void Scene::lecture(){
+void Scene::lecture(){
 	std::ifstream infile("aParser.txt");
 
 	std::string line;
@@ -116,7 +116,7 @@ static void Scene::lecture(){
 
 }
 
-static void Scene::write_image(){ //Creation du fichier ppm
+void Scene::write_image(){ //Creation du fichier ppm
 	std::ofstream outfile;
 	outfile.open("new.ppm");
 	outfile<<"P6\n";

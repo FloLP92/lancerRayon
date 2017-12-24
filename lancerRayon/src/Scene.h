@@ -2,14 +2,14 @@
 #define SCENE_H_
 #include <vector>
 #include <iostream>
-//#include <boost/optional.hpp>
+#include <boost/optional.hpp>
 #include "Sphere.h"
 #include "Light.h"
 #include "Screen.h"
 
 class Scene {
 private:
-	std::vector<Sphere> tabSphere;
+	std::vector<Sphere> tabSphere; // tableau de spheres
 	Light light;
 	Coord3 camera;
 	Screen screen;

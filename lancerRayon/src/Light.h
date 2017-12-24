@@ -10,9 +10,12 @@
 #include "Struct.h"
 
 class Light {
+
 private:
 	RGB color;
 	Coord3 position;
+
+
 public:
 	Light(RGB chColor,Coord3 chPosition);
 	Light();

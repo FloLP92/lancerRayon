@@ -5,11 +5,11 @@
  *      Author: vincent.doisneau
  */
 
-#include "Light.h"
 #include <iostream>
+#include "Light.h"
+
 
 Light::Light(RGB chColor,Coord3 chPosition) {
-	// TODO Auto-generated constructor stub
 	color = chColor;
 	position = chPosition;
 }

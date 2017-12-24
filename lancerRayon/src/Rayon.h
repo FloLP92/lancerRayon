@@ -10,6 +10,7 @@
 #include "Sphere.h"
 #include "Struct.h"
 #include <vector>
+#include <valarray>
 #include <iostream>
 #include <boost/optional.hpp>
 
@@ -21,8 +22,8 @@ private:
 public:
 	Rayon();
 	virtual ~Rayon();
-	static boost::optional<Coord3*> calculPtIntersection(Coord3 ptSphere,std::vector<float> vectDirecteur,float RayonSphere);
-	bool calculRayonReflechi(std::vector<float> rayonIncident,Sphere s,Coord3 ptInter);
+	static boost::optional<Coord3*> calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere);
+	bool calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter);
 };
 
 #endif /* RAYON_H_ */
