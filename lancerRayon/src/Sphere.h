@@ -13,14 +13,13 @@ class Sphere {
 private :
 	float radius;
 	Coord3 center;
-	float surface;
 	float reflexion;
+	RGB color;
 public:
-	Sphere(float chRadius, Coord3 chCenter, float chSurface, float chReflexion);
+	Sphere(float chRadius, Coord3 chCenter, float chReflexion,RGB color);
 	virtual ~Sphere();
 	float getRadius();
 	Coord3 getCenter();
-	float getSurface();
 };
 
 #endif /* SPHERE_H_ */

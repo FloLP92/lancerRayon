@@ -16,13 +16,14 @@
 using namespace std;
 
 int main() {
-	Coord3 camera;
-	Coord3 light;
-	RGB colorLight;
+	Light light;
+	Scene scene1;
+
+	scene1.lecture();
 
 	Scene::write_image();
 	Test::testParsing();
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	cout << scene1.getTabSphere().size()<< endl; // prints !!!Hello World!!!
 	return 0;
 }
 
@@ -59,5 +60,3 @@ void write_image(image_t* img,char* nameFile)
 	fclose(pgmFile);
 	printf("Image has been written in %s\n",nameFile);
 }
-
-

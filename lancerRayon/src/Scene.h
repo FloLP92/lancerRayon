@@ -13,15 +13,21 @@ private:
 	Light light;
 	Coord3 camera;
 	Screen screen;
+	RGB backgroundColor;
 public:
 	Scene(){}
 	virtual ~Scene();
+	static void write_image();
+	void lecture();
+
+	/*getters & setters*/
 	Screen getScreen();
 	void setScreen(Screen s);
 	Light getLight();
 	void setLight(Light l);
-	void lecture();
-	static void write_image();
+	void setBackgroundColor(RGB c);
+	RGB getBackgroundColor();
+	std::vector<Sphere> getTabSphere();
 };
 
 #endif /* SCENE_H_ */

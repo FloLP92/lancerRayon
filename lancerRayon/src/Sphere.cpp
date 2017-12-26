@@ -7,11 +7,11 @@
 #include <iostream>
 #include "Sphere.h"
 
-Sphere::Sphere(float chRadius, Coord3 chCoord3, float chSurface, float chReflexion) {
+Sphere::Sphere(float chRadius, Coord3 chCoord3, float chReflexion,RGB c) {
 	radius = chRadius;
 	center = chCoord3;
-	surface = chSurface;
 	reflexion = chReflexion;
+	color = c;
 }
 
 Sphere::~Sphere() {
@@ -21,9 +21,7 @@ Sphere::~Sphere() {
 float Sphere::getRadius(){
 	return radius;
 }
-float Sphere::getSurface(){
-	return surface;
-}
+
 Coord3 Sphere::getCenter(){
 	return center;
 }

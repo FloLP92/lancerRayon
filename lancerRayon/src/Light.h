@@ -21,6 +21,11 @@ public:
 	Light();
 	virtual ~Light();
 	void toString();
+
+	void setPosition(Coord3 position);
+	Coord3 getPosition();
+	void setColor(RGB color);
+	RGB getColor();
 };
 
 #endif /* LIGHT_H_ */

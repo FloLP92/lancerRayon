@@ -25,12 +25,21 @@ public:
 	virtual ~Screen();
 	void calculBrCorner();
 
-	Coord3 getCoord3() const;
-	RGB getColor() const;
-	float getTpCorner() const;
-	float getBlCorner() const;
-	float getHorResolution() const;
-	float getVerResolution() const;
+	RGB getColor();
+	Coord3 getTrCorner();
+	Coord3 getBlCorner();
+	Coord3 getTlCorner();
+	Coord3 getBrCorner();
+	float getHorResolution();
+	float getVerResolution();
+
+	void setColor(RGB c);
+	void setTrCorner(Coord3 c);
+	void setBlCorner(Coord3 c);
+	void setTlCorner(Coord3 c);
+	void setBrCorner(Coord3 c);
+	void setHorResolution(float res);
+	void setVerResolution(float res);
 };
 
 #endif /* SCREEN_H_ */
