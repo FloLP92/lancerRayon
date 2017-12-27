@@ -115,7 +115,6 @@ void Scene::lecture(){
 						cF = std::stof(cP,&sz);
 						bl.x = aF; bl.y = bF; bl.z = cF;
 						this->getScreen().setBlCorner(bl);
-
 	    			break;
 	    		case 5 : // screen horizontal resolution (on lit 1 donnee sur cette ligne)
 	    			cout << aP << endl;
@@ -180,7 +179,7 @@ void Scene::lecture(){
 						Coord3 coordSphere; coordSphere.x = aF; coordSphere.y = bF; coordSphere.z = cF;
 						RGB colorSphere; colorSphere.red = eF; colorSphere.green = fF; colorSphere.blue = gF;
 						Sphere sphere1 = Sphere(dF,coordSphere,hF,colorSphere);
-						this->getTabSphere().push_back(sphere1);
+						this->tabSphere.push_back(sphere1);
 						std::cout<<this->getTabSphere().size()<<std::endl;
 						break;
 	    	}//end switch

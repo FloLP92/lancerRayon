@@ -28,6 +28,7 @@ public:
 	void setBackgroundColor(RGB c);
 	RGB getBackgroundColor();
 	std::vector<Sphere> getTabSphere();
+
 };
 
 #endif /* SCENE_H_ */

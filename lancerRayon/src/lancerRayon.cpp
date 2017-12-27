@@ -22,7 +22,7 @@ int main() {
 	scene1.lecture();
 
 	Scene::write_image();
-	Test::testParsing();
+	//Test::testParsing();
 	cout << scene1.getTabSphere().size()<< endl; // prints !!!Hello World!!!
 	return 0;
 }
@@ -32,8 +32,6 @@ Coord3 equaRay(Coord3 chCamera, Coord3 chLight)
 	Coord3 ray;
 	return ray;
 }
-
-
 
 //take an image_t and write it on a ppm file
 void write_image(image_t* img,char* nameFile)
