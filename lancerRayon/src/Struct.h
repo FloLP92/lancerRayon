@@ -17,16 +17,10 @@ struct RGB {
    int green;
    int blue;
  };
-struct Coord3{
-	float x;
-	float y;
-	float z;
-};
 
 class Struct {
 public :
-	static void coutCoord3(Coord3 c);
-	static Coord3 createCoord3(float x,float y,float z);
+
 };
 
 

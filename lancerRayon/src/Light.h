@@ -8,6 +8,7 @@
 #ifndef LIGHT_H_
 #define LIGHT_H_
 #include "Struct.h"
+#include "Coord3.h"
 
 class Light {
 

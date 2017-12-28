@@ -6,6 +6,8 @@
  */
 
 #include "Screen.h"
+#include "Coord3.h"
+#include <cmath>
 
 Screen::~Screen() {
 	// TODO Auto-generated destructor stub
@@ -14,10 +16,29 @@ Screen::~Screen() {
 void Screen::calculBrCorner()
 {
 	Coord3 coord;
+	/*
 	coord.x = trCorner.x;
 	coord.y = blCorner.y;
-	coord.z = trCorner.z;
+	coord.z = trCorner.z;*/
+
 	brCorner = coord;
+}
+void Screen::calculResVer() //Calcul res verticale selon les bords
+{
+
+	int longueurHorizontale = sqrt(
+			pow((brCorner.x - blCorner.x), 2)
+			+ pow((brCorner.y - blCorner.y), 2)
+			+ pow((brCorner.z - blCorner.z), 2));
+
+	int longueurVerticale = sqrt(
+			pow((tlCorner.x - blCorner.x), 2)
+			+ pow((tlCorner.y - blCorner.y), 2)
+			+ pow((tlCorner.z - blCorner.z),2));
+
+	verRes = (horRes/longueurHorizontale)*longueurVerticale;
+
+	initPixels(); //initialisation du tableau de pixels
 }
 
 

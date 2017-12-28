@@ -13,6 +13,7 @@
 #include <valarray>
 #include <iostream>
 #include <boost/optional.hpp>
+#include "Coord3.h"
 
 class Rayon {
 

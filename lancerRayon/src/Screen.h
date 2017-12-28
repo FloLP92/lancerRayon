@@ -24,6 +24,7 @@ public:
 	Screen(){horRes = 0; verRes = 0;}
 	virtual ~Screen();
 	void calculBrCorner();
+	void calculResVer();
 
 	RGB getColor();
 	Coord3 getTrCorner();
