@@ -99,6 +99,11 @@ void Scene::lecture(){
 			Coord3 tr;
 			Coord3 bl;
 			Coord3 br;
+			this->screen.setTrCorner(tr);
+			this->screen.setTlCorner(tl);
+			this->screen.setBlCorner(bl);
+			this->screen.setBrCorner(br);
+
 			RGB colorBG;
 			Coord3 coordLight;
 			RGB colorLight;
@@ -131,7 +136,7 @@ void Scene::lecture(){
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
 						tl.setX(aF); tl.setY(bF); tl.setZ(cF);
-						this->screen.setTlCorner(tl);
+
 	    			break;
 	    		case 3: //Top right corner (on lit 2 autres donnees sur cette ligne)
 	    			iss >> bP >> cP;
@@ -143,7 +148,6 @@ void Scene::lecture(){
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
 						tr.setX(aF); tr.setY(bF); tr.setZ(cF);
-						this->screen.setTrCorner(tr);
 	    			break;
 	    		case 4 : // Bottom left corner (on lit 2 autres donnees sur cette ligne)
 	    			iss >> bP >> cP;
@@ -154,7 +158,6 @@ void Scene::lecture(){
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
 						bl.setX(aF); bl.setY(bF); bl.setZ(cF);
-						this->screen.setBlCorner(bl);
 	    			break;
 	    		case 5 : // screen horizontal resolution (on lit 1 donnee sur cette ligne)
 	    			cout << aP << endl;
@@ -237,7 +240,6 @@ void Scene::lecture(){
 	std::cout<< "Point 3 "<<std::endl;
 	screen.creationPixels();
 	std::cout<< "Point 4 "<<std::endl;
-
 }
 
 void Scene::write_image(){ //Creation du fichier ppm

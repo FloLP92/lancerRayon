@@ -27,7 +27,7 @@ void Test::test1(){
 	assert(test != boost::none);
 	cout << "1er test" << endl;
 	for(unsigned int i(0);i< sizeof(test)/sizeof(*test);i++){
-		cout << test.get()[i] << endl;
+		//cout << test.get()[i] << endl;
 	}
 
 	Coord3 sphere2(0,4,0);
@@ -39,7 +39,7 @@ void Test::test1(){
 	assert(test != boost::none);
 	cout << "2eme test" << endl;
 	for(unsigned int i(0);i< sizeof(test2)/sizeof(*test2);i++){
-		cout << test2.get()[i] << endl;
+		//cout << test2.get()[i] << endl;
 	}
 }
 
@@ -47,4 +47,3 @@ void Test::testParsing(){
 	Scene scene;
 	scene.lecture();
 }
-
