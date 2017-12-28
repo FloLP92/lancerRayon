@@ -20,3 +20,10 @@ void Pixel::setCoord3(Coord3 chCoord){
 void Pixel::setColor(RGB chColor){
   color = chColor;
 }
+
+RGB Pixel::getColor(){
+  return color;
+}
+Coord3 Pixel::getCoord3(){
+  return coord;
+}

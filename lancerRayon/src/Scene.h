@@ -14,11 +14,10 @@ private:
 	Light light;
 	Coord3 camera;
 	Screen screen;
-	RGB backgroundColor;
 public:
 	Scene(){}
 	virtual ~Scene();
-	static void write_image();
+	void write_image();
 	void lecture();
 	bool eclaireParSource(Coord3 coordPoint);
 	bool calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter);
@@ -27,8 +26,6 @@ public:
 	void setScreen(Screen s);
 	Light getLight();
 	void setLight(Light l);
-	void setBackgroundColor(RGB c);
-	RGB getBackgroundColor();
 	std::vector<Sphere> getTabSphere();
 
 };

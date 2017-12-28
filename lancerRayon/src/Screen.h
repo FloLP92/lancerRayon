@@ -39,6 +39,7 @@ public:
 	Coord3 getBrCorner();
 	float getHorResolution();
 	float getVerResolution();
+	std::vector<std::vector<Pixel>> getTabPixels();
 
 	void setColor(RGB c);
 	void setTrCorner(const Coord3& c);

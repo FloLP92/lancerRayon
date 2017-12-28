@@ -21,6 +21,8 @@ public:
 
 	void setCoord3(Coord3 chCoord);
 	void setColor(RGB chColor);
+	RGB getColor();
+	Coord3 getCoord3();
 };
 
 #endif /* PIXEL_H_ */

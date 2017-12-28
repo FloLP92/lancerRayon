@@ -26,12 +26,7 @@ Light Scene::getLight(){
 void Scene::setLight(Light chLight){
 	light = chLight;
 }
-RGB Scene::getBackgroundColor(){
-	return backgroundColor;
-}
-void Scene::setBackgroundColor(RGB c){
-	backgroundColor = c;
-}
+
 vector<Sphere> Scene::getTabSphere(){
 	return tabSphere;
 }
@@ -103,10 +98,16 @@ void Scene::lecture(){
 			this->screen.setTlCorner(tl);
 			this->screen.setBlCorner(bl);
 			this->screen.setBrCorner(br);
-
+			unsigned int horres = 0;
+			unsigned int verres = 0;
 			RGB colorBG;
 			Coord3 coordLight;
 			RGB colorLight;
+			l.setPosition(coordLight);
+			l.setColor(colorLight);
+			this->screen.setColor(colorBG);
+			this->screen.setHorResolution(horres);
+			this->screen.setVerResolution(verres);
 	    if (!(iss >> aP)) { break; } // On lit le premier mot de la ligne
 	    else if(aP.compare("#")!=0){ // on ne tombe par sur un commentaire : c'est une donnee utile
 	    	dataRead++; // On incremente le nombre de données utiles lues
@@ -161,11 +162,8 @@ void Scene::lecture(){
 	    			break;
 	    		case 5 : // screen horizontal resolution (on lit 1 donnee sur cette ligne)
 	    			cout << aP << endl;
-						aF = std::stof(aP,&sz);
-						std::cout<< "ccc " << std::endl;
-						this->screen.setHorResolution(aF);
-						std::cout<< screen.getHorResolution() << std::endl;
-						std::cout<< aF << std::endl;
+						horres = std::stoi(aP,&sz);
+						this->screen.setHorResolution(horres);
 	    			break;
 	    		case 6 : // background color (on lit 2 autres donnees sur cette ligne
 	    			iss >> bP >> cP;
@@ -175,8 +173,8 @@ void Scene::lecture(){
 						aF = std::stoi(aP,&sz);
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
-						 colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
-						this->screen.setColor(colorBG);
+						colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
+
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
 	    			iss >> bP >> cP >> dP >> eP >> fP;
@@ -197,8 +195,6 @@ void Scene::lecture(){
 						fF = std::stoi(fP,&sz);
 						coordLight.setX(aF); coordLight.setY(bF); coordLight.setZ(cF);
 						colorLight.red = dF; colorLight.green = eF; colorLight.blue = fF;
-						l.setPosition(coordLight);
-						l.setColor(colorLight);
 	    			break;
 
 	    		default : //reste des infos utiles cad la liste des cercles en bas du fichier
@@ -233,6 +229,7 @@ void Scene::lecture(){
 	}// end while read
 	std::cout<< "tlCorner " << screen.getTlCorner() << std::endl;
 	std::cout<< "aa" << screen.getHorResolution() <<std::endl;
+	std::cout<< "ccc " << std::endl;
 	std::cout<< "Point 1 "<<std::endl;
 	screen.calculBrCorner();
 	std::cout<< "Point 2 "<<std::endl;
@@ -246,7 +243,17 @@ void Scene::write_image(){ //Creation du fichier ppm
 	std::ofstream outfile;
 	outfile.open("new.ppm");
 	outfile<<"P6\n";
-	outfile<<"4 4\n";
-	outfile<<"15\n";
+	outfile<<this->screen.getHorResolution()<<" "<<this->screen.getVerResolution()<<"\n";
+	outfile<<"255\n";
+
+	std::vector<std::vector<Pixel>> tabPixels = this->screen.getTabPixels();
+	for (unsigned int j(0); j < this->screen.getVerResolution(); ++j)
+	{
+		for(unsigned int k(0); k < this->screen.getHorResolution(); ++k)
+		{
+			outfile<<tabPixels[j][k].getColor().red<<" "<< tabPixels[j][k].getColor().green<<" "<<tabPixels[j][k].getColor().blue<<"\t";
+		}
+		outfile<<"\n";
+	}
 	outfile.close();
 }

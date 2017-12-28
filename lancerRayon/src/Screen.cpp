@@ -48,7 +48,6 @@ void Screen::creationPixels()
 	tabPixels.resize(verRes);
 	for (unsigned int i(0); i < verRes; ++i)
 		tabPixels[i].resize(horRes);
-
 	for (unsigned int j(0); j < verRes; ++j)
 	{
 		for(unsigned int k(0); k < horRes; ++k)
@@ -57,7 +56,9 @@ void Screen::creationPixels()
 						tlCorner.getX() + ((double)j/verRes)*(trCorner.getX() - tlCorner.getX()) + ((double)k/horRes)* (blCorner.getX() - tlCorner.getX()),
 						tlCorner.getY() + ((double)j/verRes)*(trCorner.getY() - tlCorner.getY()) + ((double)k/horRes)* (blCorner.getY() - tlCorner.getY()),
 						tlCorner.getZ() + ((double)j/verRes)*(trCorner.getZ() - tlCorner.getZ()) + ((double)k/horRes)* (blCorner.getZ() - tlCorner.getZ())));
+			tabPixels[j][k].setColor(this->color);
 		}
+
 	}
 }
 
@@ -82,6 +83,10 @@ float Screen::getHorResolution(){
 }
 float Screen::getVerResolution(){
 	return verRes;
+}
+
+std::vector<std::vector<Pixel>> Screen::getTabPixels(){
+	return tabPixels;
 }
 
 void Screen::setColor(RGB c){
