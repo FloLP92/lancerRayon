@@ -41,9 +41,9 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
 	valarray<float> vectDirecteur;
-	vectDirecteur(coordPoint.x - light.getPosition().x);
-	vectDirecteur(coordPoint.y - light.getPosition().y);
-	vectDirecteur(coordPoint.z - light.getPosition().z);
+	vectDirecteur[coordPoint.x - light.getPosition().x];
+	vectDirecteur[coordPoint.y - light.getPosition().y];
+	vectDirecteur[coordPoint.z - light.getPosition().z];
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
@@ -65,10 +65,10 @@ bool Scene::calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord
 			for(Sphere sphere : tabSphere) //On teste pour chaque objet
 			{
 				//intersections = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius())
-				if(sphere != boost::none)
+				/*if(sphere != boost::none)
 				{
 
-				}
+				}*/
 			}
 		}
 	}
