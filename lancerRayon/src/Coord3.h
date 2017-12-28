@@ -21,22 +21,17 @@ public:
 	static Coord3 paralleleCoord3(const Coord3 c1, const Coord3 middle);
 
 	//Surcharge operateurs
-	Coord3 operator+ (const Coord3& c) const{//Addition de 2 Coord3
-		return Coord3(x + c.x, y + c.y, z + c.z);
-	}
-	Coord3 operator/ (const int nb) const{//Division d un Coord3
-			return Coord3(x/nb, y/nb, z/nb);
-	}
+	Coord3 operator+ (const Coord3& c) const;//Addition de 2 Coord3
+	Coord3 operator/ (const int nb) const;//Division d un Coord3
+	Coord3& operator= (const Coord3&);
 
-		float getX();
-		float getY();
-		float getZ();
-		void setX(float xx);
-		void setY(float yy);
-		void setZ(float zz);
+	float getX();
+	float getY();
+	float getZ();
+	void setX(float xx);
+	void setY(float yy);
+	void setZ(float zz);
 };
 
-std::ostream& operator<<(std::ostream &out, const Coord3 &a) {//Affichage Coord3
-		return out << "x : " << a.x << " y : " << a.y << " z : " << a.z << std::endl;
-	}
+std::ostream& operator<<(std::ostream &out, const Coord3 &a);
 #endif /* COORD3_H_ */

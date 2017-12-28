@@ -41,12 +41,12 @@ public:
 	float getVerResolution();
 
 	void setColor(RGB c);
-	void setTrCorner(Coord3 c);
-	void setBlCorner(Coord3 c);
-	void setTlCorner(Coord3 c);
-	void setBrCorner(Coord3 c);
-	void setHorResolution(float res);
-	void setVerResolution(float res);
+	void setTrCorner(const Coord3& c);
+	void setBlCorner(const Coord3& c);
+	void setTlCorner(const Coord3& c);
+	void setBrCorner(const Coord3& c);
+	void setHorResolution(const float res);
+	void setVerResolution(const float res);
 };
 
 #endif /* SCREEN_H_ */

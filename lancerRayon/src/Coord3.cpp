@@ -52,3 +52,20 @@ void Coord3::setY(float yy){
 void Coord3::setZ(float zz){
 	z = zz;
 }
+
+Coord3 Coord3::operator+ (const Coord3& c) const{//Addition de 2 Coord3
+	return Coord3(x + c.x, y + c.y, z + c.z);
+}
+Coord3 Coord3::operator/ (const int nb) const{//Division d un Coord3
+	return Coord3(x/nb, y/nb, z/nb);
+}
+Coord3& Coord3::operator= (const Coord3& coord){
+	x = coord.x;
+	y = coord.y;
+	z = coord.z;
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream &out, const Coord3 &a) {//Affichage Coord3
+		return out << "x : " << a.x << " y : " << a.y << " z : " << a.z << std::endl;
+	}

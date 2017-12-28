@@ -131,7 +131,7 @@ void Scene::lecture(){
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
 						tl.setX(aF); tl.setY(bF); tl.setZ(cF);
-						this->getScreen().setTlCorner(tl);
+						this->screen.setTlCorner(tl);
 	    			break;
 	    		case 3: //Top right corner (on lit 2 autres donnees sur cette ligne)
 	    			iss >> bP >> cP;
@@ -143,7 +143,7 @@ void Scene::lecture(){
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
 						tr.setX(aF); tr.setY(bF); tr.setZ(cF);
-						this->getScreen().setTrCorner(tr);
+						this->screen.setTrCorner(tr);
 	    			break;
 	    		case 4 : // Bottom left corner (on lit 2 autres donnees sur cette ligne)
 	    			iss >> bP >> cP;
@@ -154,12 +154,15 @@ void Scene::lecture(){
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
 						bl.setX(aF); bl.setY(bF); bl.setZ(cF);
-						this->getScreen().setBlCorner(bl);
+						this->screen.setBlCorner(bl);
 	    			break;
 	    		case 5 : // screen horizontal resolution (on lit 1 donnee sur cette ligne)
 	    			cout << aP << endl;
 						aF = std::stof(aP,&sz);
-						this->getScreen().setHorResolution(aF);
+						std::cout<< "ccc " << std::endl;
+						this->screen.setHorResolution(aF);
+						std::cout<< screen.getHorResolution() << std::endl;
+						std::cout<< aF << std::endl;
 	    			break;
 	    		case 6 : // background color (on lit 2 autres donnees sur cette ligne
 	    			iss >> bP >> cP;
@@ -170,7 +173,7 @@ void Scene::lecture(){
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
 						 colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
-						this->getScreen().setColor(colorBG);
+						this->screen.setColor(colorBG);
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
 	    			iss >> bP >> cP >> dP >> eP >> fP;
@@ -225,9 +228,15 @@ void Scene::lecture(){
 	    	}//end switch
 	    }// end if comment
 	}// end while read
+	std::cout<< "tlCorner " << screen.getTlCorner() << std::endl;
+	std::cout<< "aa" << screen.getHorResolution() <<std::endl;
+	std::cout<< "Point 1 "<<std::endl;
 	screen.calculBrCorner();
+	std::cout<< "Point 2 "<<std::endl;
 	screen.calculResVer();
+	std::cout<< "Point 3 "<<std::endl;
 	screen.creationPixels();
+	std::cout<< "Point 4 "<<std::endl;
 
 }
 
