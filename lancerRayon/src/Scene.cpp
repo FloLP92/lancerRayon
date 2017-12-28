@@ -225,6 +225,7 @@ void Scene::lecture(){
 	}// end while read
 	screen.calculBrCorner();
 	screen.calculResVer();
+	screen.creationPixels();
 
 }
 

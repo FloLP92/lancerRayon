@@ -7,8 +7,11 @@
 
 #ifndef SCREEN_H_
 #define SCREEN_H_
+#include <vector>
 #include "Struct.h"
 #include "Coord3.h"
+#include "Pixel.h"
+
 
 class Screen {
 private :
@@ -17,8 +20,9 @@ private :
 	Coord3 trCorner;
 	Coord3 blCorner;
 	Coord3 brCorner;
-	float horRes;
-	float verRes;
+	unsigned int horRes;
+	unsigned int verRes;
+	std::vector<std::vector<Pixel>> tabPixels;
 public:
 	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, float chHorRes, float chVerRes): color(chColor),
 		tlCorner(chTlCorner), trCorner(chTrCorner), blCorner(chBlCorner), horRes(chHorRes), verRes(chVerRes){}
@@ -26,6 +30,7 @@ public:
 	virtual ~Screen();
 	void calculBrCorner();
 	void calculResVer();
+	void creationPixels();
 
 	RGB getColor();
 	Coord3 getTrCorner();

@@ -38,6 +38,23 @@ void Screen::calculResVer() //Calcul res verticale selon les bords
 
 	verRes = (horRes/longueurHorizontale)*longueurVerticale;
 }
+void Screen::creationPixels()
+{
+	tabPixels.resize(verRes);
+	for (unsigned int i(0); i < verRes; ++i)
+		tabPixels[i].resize(horRes);
+
+	for (unsigned int j(0); j < verRes; ++j)
+	{
+		for(unsigned int k(0); k < horRes; ++k)
+		{
+			tabPixels[j][k].setCoord3(Coord3(
+						tlCorner.x + ((double)j/verRes)*(trCorner.x - tlCorner.x) + ((double)k/horRes)* (blCorner.x - tlCorner.x),
+						tlCorner.y + ((double)j/verRes)*(trCorner.y - tlCorner.y) + ((double)k/horRes)* (blCorner.y - tlCorner.y),
+						tlCorner.z + ((double)j/verRes)*(trCorner.z - tlCorner.z) + ((double)k/horRes)* (blCorner.z - tlCorner.z)));
+		}
+	}
+}
 
 
 RGB Screen::getColor(){
@@ -61,7 +78,6 @@ float Screen::getHorResolution(){
 float Screen::getVerResolution(){
 	return verRes;
 }
-
 
 void Screen::setColor(RGB c){
 	color = c;
