@@ -52,8 +52,27 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	}
 	return true;
 }
+
+//Calcul de l image sans reflexion
 bool Scene::calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter)
 {
+
+	boost::optional<Coord3*> intersections = new Coord3();
+	for(unsigned int i(0); i < screen.getVerResolution(); i++)
+	{
+		for(unsigned int i(0); i < screen.getHorResolution(); i++)
+		{
+			for(Sphere sphere : tabSphere) //On teste pour chaque objet
+			{
+				//intersections = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius())
+				if(sphere != boost::none)
+				{
+
+				}
+			}
+		}
+	}
+	return false;
 
 }
 void Scene::lecture(){
