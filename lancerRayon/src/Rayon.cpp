@@ -26,7 +26,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
 	float b = 2*vectDirecteur[0]*ptSphere.x*(-1)+ 2*vectDirecteur[1]*ptSphere.y*(-1) + 2*vectDirecteur[1]*ptSphere.z*(-1);
 	float c = ptSphere.x*ptSphere.x+ptSphere.y*ptSphere.y+ptSphere.z*ptSphere.z-RayonSphere*RayonSphere;
-	std::vector<float> solution; // On va stocker nos solutions réelles dedans
+	std::vector<float> solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
 	if(delta<0){
 		std::cout << "begin " << a << " " << b << " " << c << " end" << std::endl;
@@ -59,6 +59,8 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 		return coordonnees;
 	}
 }
+
+
 
 bool Rayon::calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter){
 

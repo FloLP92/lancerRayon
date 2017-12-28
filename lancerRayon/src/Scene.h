@@ -2,6 +2,7 @@
 #define SCENE_H_
 #include <vector>
 #include <iostream>
+#include <valarray>
 #include <boost/optional.hpp>
 #include "Sphere.h"
 #include "Light.h"
@@ -19,6 +20,9 @@ public:
 	virtual ~Scene();
 	static void write_image();
 	void lecture();
+	bool eclaireParSource(Coord3 coordPoint);
+	bool calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter)
+
 
 	/*getters & setters*/
 	Screen getScreen();

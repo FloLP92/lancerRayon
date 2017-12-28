@@ -23,7 +23,9 @@ int main() {
 
 	Scene::write_image();
 	//Test::testParsing();
-	cout << scene1.getTabSphere().size()<< endl; // prints !!!Hello World!!!
+	cout << "taille tableau sphere " << scene1.getTabSphere().size()<< endl;
+	std::vector<Coord3*> tabIntersection;
+	boost::optional<Coord3*> calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere);
 	return 0;
 }
 

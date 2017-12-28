@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <boost/algorithm/string.hpp>
 #include "Light.h"
+#include "Rayon.h"
 
 using namespace std;
 
@@ -25,18 +26,36 @@ Light Scene::getLight(){
 void Scene::setLight(Light chLight){
 	light = chLight;
 }
-
 RGB Scene::getBackgroundColor(){
 	return backgroundColor;
 }
 void Scene::setBackgroundColor(RGB c){
 	backgroundColor = c;
 }
-
-std::vector<Sphere> Scene::getTabSphere(){
+vector<Sphere> Scene::getTabSphere(){
 	return tabSphere;
 }
 
+//renvoit boolean indiquant si point eclaire par source lumineuse
+bool Scene::eclaireParSource(Coord3 coordPoint)
+{
+	//On calcule le vecteur directeur
+	valarray<float> vectDirecteur;
+	vectDirecteur(coordPoint.x - light.getPosition().x);
+	vectDirecteur(coordPoint.y - light.getPosition().y);
+	vectDirecteur(coordPoint.z - light.getPosition().z);
+
+	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
+	{
+		if(Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius()) != boost::none)
+			return false;
+	}
+	return true;
+}
+bool Scene::calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter)
+{
+
+}
 void Scene::lecture(){
 	std::ifstream infile("aParser.txt");
 
