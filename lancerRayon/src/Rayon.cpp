@@ -24,8 +24,8 @@ Rayon::~Rayon() {
 boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
 	//but trouver les coef de lequation de degre 2
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
-	float b = 2*vectDirecteur[0]*ptSphere.x*(-1)+ 2*vectDirecteur[1]*ptSphere.y*(-1) + 2*vectDirecteur[1]*ptSphere.z*(-1);
-	float c = ptSphere.x*ptSphere.x+ptSphere.y*ptSphere.y+ptSphere.z*ptSphere.z-RayonSphere*RayonSphere;
+	float b = 2*vectDirecteur[0]*ptSphere.getX()*(-1)+ 2*vectDirecteur[1]*ptSphere.getY()*(-1) + 2*vectDirecteur[1]*ptSphere.getZ()*(-1);
+	float c = ptSphere.getX()*ptSphere.getX()+ptSphere.getY()*ptSphere.getY()+ptSphere.getZ()*ptSphere.getZ()-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
 	if(delta<0){
@@ -53,7 +53,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 			float x= vectDirecteur[0]*solution[i]; // (+ptorigine.x)
 			float y= vectDirecteur[1]*solution[i]; // (+ptorigine.y)
 			float z= vectDirecteur[2]*solution[i]; // (+ptorigine.z)
-			Coord3 c = Struct::createCoord3(x, y, z);
+			Coord3 c = Coord3(x, y, z);
 			coordonnees.get()[i] = c;
 		}
 		return coordonnees;
@@ -68,9 +68,9 @@ bool Rayon::calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coor
 
 	//First Step. Point 1 : get vector origin sphere and intersection
 	std::valarray<float> rayon(3);
-	rayon[0] = ptInter.x-s.getCenter().x;
-	rayon[1] = ptInter.y-s.getCenter().y;
-	rayon[2] = ptInter.z-s.getCenter().z;
+	rayon[0] = ptInter.getX()-s.getCenter().getX();
+	rayon[1] = ptInter.getY()-s.getCenter().getY();
+	rayon[2] = ptInter.getZ()-s.getCenter().getZ();
 
 	//First Step. Point 2 : norme
 	float n = sqrt(rayon[0]*rayon[0] + rayon[1]*rayon[1] + rayon[2]*rayon[2]);

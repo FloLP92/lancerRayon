@@ -41,9 +41,9 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
 	valarray<float> vectDirecteur;
-	vectDirecteur[coordPoint.x - light.getPosition().x];
-	vectDirecteur[coordPoint.y - light.getPosition().y];
-	vectDirecteur[coordPoint.z - light.getPosition().z];
+	vectDirecteur[coordPoint.getX() - light.getPosition().getX()];
+	vectDirecteur[coordPoint.getY() - light.getPosition().getY()];
+	vectDirecteur[coordPoint.getZ() - light.getPosition().getZ()];
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
@@ -99,7 +99,9 @@ void Scene::lecture(){
 			Coord3 tr;
 			Coord3 bl;
 			Coord3 br;
-
+			RGB colorBG;
+			Coord3 coordLight;
+			RGB colorLight;
 	    if (!(iss >> aP)) { break; } // On lit le premier mot de la ligne
 	    else if(aP.compare("#")!=0){ // on ne tombe par sur un commentaire : c'est une donnee utile
 	    	dataRead++; // On incremente le nombre de données utiles lues
@@ -114,9 +116,9 @@ void Scene::lecture(){
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
-						this->camera.x = aF;
-						this->camera.y = bF;
-						this->camera.z = cF;
+						this->camera.setX(aF);
+						this->camera.setY(bF);
+						this->camera.setZ(cF);
 
 	    			break;
 	    		case 2: //Top left corner (on lit 2 autres donnees sur cette ligne)
@@ -128,7 +130,7 @@ void Scene::lecture(){
 						aF = std::stoi(aP,&sz);
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
-						tl.x = aF; tl.y = bF; tl.z = cF;
+						tl.setX(aF); tl.setY(bF); tl.setZ(cF);
 						this->getScreen().setTlCorner(tl);
 	    			break;
 	    		case 3: //Top right corner (on lit 2 autres donnees sur cette ligne)
@@ -140,7 +142,7 @@ void Scene::lecture(){
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
-						tr.x = aF; tr.y = bF; tr.z = cF;
+						tr.setX(aF); tr.setY(bF); tr.setZ(cF);
 						this->getScreen().setTrCorner(tr);
 	    			break;
 	    		case 4 : // Bottom left corner (on lit 2 autres donnees sur cette ligne)
@@ -151,7 +153,7 @@ void Scene::lecture(){
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
-						bl.x = aF; bl.y = bF; bl.z = cF;
+						bl.setX(aF); bl.setY(bF); bl.setZ(cF);
 						this->getScreen().setBlCorner(bl);
 	    			break;
 	    		case 5 : // screen horizontal resolution (on lit 1 donnee sur cette ligne)
@@ -167,7 +169,7 @@ void Scene::lecture(){
 						aF = std::stoi(aP,&sz);
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
-						RGB colorBG; colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
+						 colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
 						this->getScreen().setColor(colorBG);
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
@@ -187,8 +189,8 @@ void Scene::lecture(){
 						dF = std::stoi(dP,&sz);
 						eF = std::stoi(eP,&sz);
 						fF = std::stoi(fP,&sz);
-						Coord3 coordLight; coordLight.x = aF; coordLight.y = bF; coordLight.z = cF;
-						RGB colorLight; colorLight.red = dF; colorLight.green = eF; colorLight.blue = fF;
+						coordLight.setX(aF); coordLight.setY(bF); coordLight.setZ(cF);
+						colorLight.red = dF; colorLight.green = eF; colorLight.blue = fF;
 						l.setPosition(coordLight);
 						l.setColor(colorLight);
 	    			break;
@@ -214,7 +216,7 @@ void Scene::lecture(){
 						gF = std::stoi(eP,&sz);//blue
 						hF = std::stof(fP,&sz);//reflex
 
-						Coord3 coordSphere; coordSphere.x = aF; coordSphere.y = bF; coordSphere.z = cF;
+						Coord3 coordSphere; coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
 						RGB colorSphere; colorSphere.red = eF; colorSphere.green = fF; colorSphere.blue = gF;
 						Sphere sphere1 = Sphere(dF,coordSphere,hF,colorSphere);
 						this->tabSphere.push_back(sphere1);

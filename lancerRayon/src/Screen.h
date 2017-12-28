@@ -14,7 +14,7 @@
 
 
 class Screen {
-private :
+private:
 	RGB color;
 	Coord3 tlCorner;
 	Coord3 trCorner;

@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Struct.h"
-#include "Parsing.h"
 #include "Test.h"
 #include "Scene.h"
 using namespace std;

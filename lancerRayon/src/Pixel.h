@@ -19,8 +19,8 @@ public:
 	Pixel();
 	virtual ~Pixel();
 
-	void setCoord3(Coord3 chCoord) : coord(chCoord){}
-	void setColor(Coord3 chColor) : color(chColor){}
+	void setCoord3(Coord3 chCoord);
+	void setColor(RGB chColor);
 };
 
 #endif /* PIXEL_H_ */
