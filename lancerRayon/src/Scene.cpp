@@ -223,6 +223,8 @@ void Scene::lecture(){
 	    	}//end switch
 	    }// end if comment
 	}// end while read
+	screen.calculBrCorner();
+	screen.calculResVer();
 
 }
 

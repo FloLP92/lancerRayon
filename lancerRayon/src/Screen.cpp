@@ -15,13 +15,13 @@ Screen::~Screen() {
 
 void Screen::calculBrCorner()
 {
-	Coord3 coord;
-	/*
-	coord.x = trCorner.x;
+	Coord3 midPointTrBl,a;
+	/*coord.x = trCorner.x;
 	coord.y = blCorner.y;
-	coord.z = trCorner.z;*/
-
-	brCorner = coord;
+	coord.z = trCorner.z;
+	brCorner = coord;*/
+	midPointTrBl = (trCorner + blCorner)/2;
+	brCorner = Coord3::paralleleCoord3(tlCorner,midPointTrBl);
 }
 void Screen::calculResVer() //Calcul res verticale selon les bords
 {
@@ -37,8 +37,6 @@ void Screen::calculResVer() //Calcul res verticale selon les bords
 			+ pow((tlCorner.z - blCorner.z),2));
 
 	verRes = (horRes/longueurHorizontale)*longueurVerticale;
-
-	initPixels(); //initialisation du tableau de pixels
 }
 
 

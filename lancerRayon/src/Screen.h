@@ -8,6 +8,7 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 #include "Struct.h"
+#include "Coord3.h"
 
 class Screen {
 private :

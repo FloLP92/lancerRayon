@@ -17,6 +17,8 @@ public:
 	Coord3();
 	virtual ~Coord3();
 
+	static Coord3 paralleleCoord3(const Coord3 c1, const Coord3 middle);
+
 	//Surcharge operateurs
 	Coord3 operator+ (const Coord3& c) const{//Addition de 2 Coord3
 		return Coord3(x + c.x, y + c.y, z + c.z);
