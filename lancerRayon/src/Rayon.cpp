@@ -64,34 +64,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	}
 }
 
-bool Rayon::calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter){
 
-	//First Step : get normal vector
-
-	//First Step. Point 1 : get vector origin sphere and intersection
-	std::valarray<float> rayon(3);
-	rayon[0] = ptInter.getX()-s.getCenter().getX();
-	rayon[1] = ptInter.getY()-s.getCenter().getY();
-	rayon[2] = ptInter.getZ()-s.getCenter().getZ();
-
-	//First Step. Point 2 : norme
-	float n = sqrt(rayon[0]*rayon[0] + rayon[1]*rayon[1] + rayon[2]*rayon[2]);
-
-	//First Step. Point 3 : normale
-	std::valarray<float> normale (3);
-	normale[0] = rayon[0]/n;
-	normale[1] = rayon[1]/n;
-	normale[2] = rayon[2]/n;
-
-	//Second step : get cos
-
-	float cos = rayonIncident[0]*normale[0] + rayonIncident[1]*normale[1] + rayonIncident[2]*normale[2];
-	float no = sqrt(normale[0]*normale[0] + normale[1]*normale[1] + normale[2]*normale[2])*sqrt(rayonIncident[0]*rayonIncident[0] + rayonIncident[1]*rayonIncident[1] + rayonIncident[2]*rayonIncident[2]);
-	cos = cos/no;
-
-	return false;
-
-}
 float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter){
 	//First Step : get normal vector
 
