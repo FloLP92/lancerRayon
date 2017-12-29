@@ -18,6 +18,7 @@ public:
 	virtual ~Test();
 	static void test1();
 	static void testCalculVecteur();
+	static void testlectureEtInters();
 	static void testParsing();
 };
 

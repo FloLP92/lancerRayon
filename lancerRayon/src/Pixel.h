@@ -18,6 +18,7 @@ public:
 	Pixel(RGB chColor,Coord3 chCoord) : color(chColor), coord(chCoord){}
 	Pixel();
 	virtual ~Pixel();
+	friend std::ostream& operator<<(std::ostream &out, const Pixel &a);
 
 	void setCoord3(Coord3 chCoord);
 	void setColor(RGB chColor);
@@ -25,4 +26,5 @@ public:
 	Coord3 getCoord3();
 };
 
+std::ostream& operator<<(std::ostream &out, const Pixel &a);
 #endif /* PIXEL_H_ */

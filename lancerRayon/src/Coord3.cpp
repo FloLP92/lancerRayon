@@ -66,5 +66,5 @@ Coord3& Coord3::operator= (const Coord3& coord){
 }
 
 std::ostream& operator<<(std::ostream &out, const Coord3 &a) {//Affichage Coord3
-		return out << "x : " << a.x << " y : " << a.y << " z : " << a.z << std::endl;
-	}
+	return out << "x : " << a.x << " y : " << a.y << " z : " << a.z << std::endl;
+}

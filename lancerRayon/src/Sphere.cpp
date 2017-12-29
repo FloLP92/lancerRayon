@@ -32,7 +32,16 @@ float Sphere::getRadius(){
 Coord3 Sphere::getCenter(){
 	return center;
 }
-
 float Sphere::getReflexion(){
 	return reflexion;
 }
+
+std::ostream& operator<<(std::ostream &out, const Sphere &a) {//Affichage Coord3
+	return out << "Sphere - Center : " << a.center << " Color : " << a.color << " Radius " << a.radius << " Reflexion " << a.reflexion << std::endl;
+}
+
+
+
+
+
+

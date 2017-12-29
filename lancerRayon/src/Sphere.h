@@ -20,6 +20,8 @@ public:
 	Sphere();
 	Sphere(float chRadius, Coord3 chCenter, float chReflexion,RGB color);
 	virtual ~Sphere();
+	friend std::ostream& operator<<(std::ostream &out, const Sphere &a);
+
 
 	RGB getColor();
 	void setColor(RGB chColor);
@@ -27,5 +29,5 @@ public:
 	Coord3 getCenter();
 	float getReflexion();
 };
-
+std::ostream& operator<<(std::ostream &out, const Sphere &a);
 #endif /* SPHERE_H_ */

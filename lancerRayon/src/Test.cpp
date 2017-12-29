@@ -52,6 +52,17 @@ void Test::testCalculVecteur()
 	assert(vect[1] == -3);
 	assert(vect[2] == 9);
 }
+void Test::testlectureEtInters()
+{
+	Scene scene;
+	scene.lecture();
+	Screen screen = scene.getScreen();
+	valarray<float> vectDirecteur = Rayon::calculVecteur(scene.getCamera(),screen.getTabPixels()[1][3].getCoord3());
+	cout << "coord pixel " << screen.getTabPixels()[1][3] << endl;
+	Sphere sphere = scene.getTabSphere()[0];
+	cout << "sphere " << sphere << endl;
+	boost::optional<Coord3*> inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius());
+}
 void Test::testParsing(){
 	Scene scene;
 	scene.lecture();

@@ -27,3 +27,7 @@ RGB Pixel::getColor(){
 Coord3 Pixel::getCoord3(){
   return coord;
 }
+
+std::ostream& operator<<(std::ostream &out, const Pixel &a) {//Affichage Coord3
+	return out << "Coord : " << a.coord << " color : " << a.color << std::endl;
+}
