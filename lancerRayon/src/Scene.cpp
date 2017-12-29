@@ -244,7 +244,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 {
 	vector<vector<Pixel>> tabPixels = screen.getTabPixels();
 	boost::optional<Coord3*> inters = new Coord3(); //Tous nos points intersections
-	valarray<float> vectDirecteur;
+	std::valarray<float> vectDirecteur;
 	Sphere objet;
 	Coord3 pointInters; //Point le plus proche
 	Coord3 point1, point2;
@@ -258,6 +258,10 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
 				{
 					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
+					float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
+					vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
+					vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
+					vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
 					//std::cout<<" x : "<<vectDirecteur[0]<<" y : "<<vectDirecteur[1]<<" z: "<<vectDirecteur[2]<<std::endl;
 					//std::cout<<" xx : "<<sphere.getCenter().getX()<<" yy : "<<sphere.getCenter().getY()<<" zz: "<<sphere.getCenter().getZ()<<std::endl;
 					//std::cout<<" xxx : "<<camera.getX()<<" yyy : "<<camera.getY()<<" zzz: "<<camera.getZ()<<std::endl;
@@ -265,7 +269,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 
 					if(inters != boost::none)//On a au moins un point d intersections
 					{
-						//std::cout<<" xO : "<<inters.get()[0].getX()<<std::endl;
+
 						if(distInters == 0)//Pas d intersection, on le met direct
 						{
 							point1 = inters.get()[0];
@@ -312,12 +316,14 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 					for(Sphere sphere : tabSphere){
 						if(Rayon::calculDistance(pointInters,sphere.getCenter()) - sphere.getRadius() < 1){
 							objet = sphere;
+							std::cout<<"hello world"<<std::endl;
 						}
 					}
 					if(Scene::eclaireParSource(pointInters))
 					{
-						vectDirecteur = Rayon::calculVecteur(camera,pointInters);
+						vectDirecteur = Rayon::calculVecteur(this->light.getPosition(),pointInters);
 						float cos = Rayon::calculCos(vectDirecteur,objet,pointInters);
+
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
 					}
 					else //Pas dans la lumiere, on laisse couleur du fond

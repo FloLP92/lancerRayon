@@ -25,10 +25,11 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	//but trouver les coef de lequation de degre 2
 
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
-	float b = 2*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX())*(-1) + 2*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY())*(-1) + 2*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ())*(-1);
+	float b = (-2)*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + (-2)*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + (-2)*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ());
 	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
+
 	if(delta<0){
 		return boost::none; // On ne peut pas avoir de solutions dans r
 	}
@@ -40,13 +41,17 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 			solution.push_back(s);
 		}
 		if(b>0){
-
-			float s1 = -b-sqrt(delta)/2*a;
-			float s2 = -b+sqrt(delta)/2*a;
-			if(s1>0)
+			//std::cout<<"heelo a : "<<a<<" b : "<<b<<" c: "<<c<<" delta : "<<delta<<std::endl;
+			float s1 = (b-sqrt(delta))/(2*a);
+			float s2 = (b+sqrt(delta))/(2*a);
+			//std::cout<<" s1 : "<<s1<<" s2 : "<<s2<<std::endl;
+			if(s1>0){
+				//std::cout<<"heelo"<<std::endl;
 				solution.push_back(s1);
-			if(s2>0)
+			}
+			if(s2>0){
 				solution.push_back(s2);
+			}
 		}
 		//coordonnees du (des) point(s) trouves
 		boost::optional<Coord3*> coordonnees = new Coord3[solution.size()];
@@ -73,28 +78,22 @@ float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInte
 		normale[1] = ptInter.getY()-s.getCenter().getY();
 		normale[2] = ptInter.getZ()-s.getCenter().getZ();
 
-		/*//First Step. Point 2 : norme
-		float n = sqrt(rayon[0]*rayon[0] + rayon[1]*rayon[1] + rayon[2]*rayon[2]);
-
-		//First Step. Point 3 : normale
-		std::valarray<float> normale (3);
-		normale[0] = rayon[0]/n;
-		normale[1] = rayon[1]/n;
-		normale[2] = rayon[2]/n;*/
 
 		//Second step : get cos
 
-		float cos = rayonIncident[0]*normale[0] + rayonIncident[1]*normale[1] + rayonIncident[2]*normale[2];
+		float cosi = rayonIncident[0]*normale[0] + rayonIncident[1]*normale[1] + rayonIncident[2]*normale[2];
 		float no = sqrt(normale[0]*normale[0] + normale[1]*normale[1] + normale[2]*normale[2])*sqrt(rayonIncident[0]*rayonIncident[0] + rayonIncident[1]*rayonIncident[1] + rayonIncident[2]*rayonIncident[2]);
-		cos = cos/no;
-		return cos;
+	  //std::cout<<cosi<<std::endl;
+		//std::cout<<no<<std::endl;
+		cosi = cosi/no;
+		return cosi;
 }
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
 	float red,green,blue;
-	red = couleurInter.red*couleurSource.red/255;
-	green = couleurInter.green*couleurSource.green/255;
-	blue = couleurInter.blue*couleurSource.blue/255;
+	red = (couleurInter.red*couleurSource.red)/255;
+	green = (couleurInter.green*couleurSource.green)/255;
+	blue = (couleurInter.blue*couleurSource.blue)/255;
 	red *= cos;
 	green *= cos;
 	blue *= cos;
