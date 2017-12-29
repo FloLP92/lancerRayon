@@ -71,10 +71,10 @@ Coord3 Screen::getTlCorner(){
 Coord3 Screen::getBrCorner(){
 	return brCorner;
 }
-float Screen::getHorResolution(){
+unsigned int Screen::getHorResolution(){
 	return horRes;
 }
-float Screen::getVerResolution(){
+unsigned int Screen::getVerResolution(){
 	return verRes;
 }
 std::vector<std::vector<Pixel>> Screen::getTabPixels(){
@@ -96,9 +96,9 @@ void Screen::setTlCorner(const Coord3& c){
 void Screen::setBrCorner(const Coord3& c){
 	brCorner = c;
 }
-void Screen::setHorResolution(const float& res){
+void Screen::setHorResolution(const unsigned int& res){
 	horRes = res;
 }
-void Screen::setVerResolution(const float res){
+void Screen::setVerResolution(const unsigned int res){
 	verRes = res;
 }

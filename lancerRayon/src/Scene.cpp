@@ -44,13 +44,14 @@ void Scene::setCamera(Coord3 c){
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
-	valarray<float> vectDirecteur;
-	vectDirecteur[coordPoint.getX() - light.getPosition().getX()];
-	vectDirecteur[coordPoint.getY() - light.getPosition().getY()];
-	vectDirecteur[coordPoint.getZ() - light.getPosition().getZ()];
+	valarray<float> vectDirecteur(3);
+	vectDirecteur[0] = coordPoint.getX() - light.getPosition().getX();
+	vectDirecteur[1] = coordPoint.getY() - light.getPosition().getY();
+	vectDirecteur[2] = coordPoint.getZ() - light.getPosition().getZ();
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
+
 		if(Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition()) != boost::none)
 			return false;
 	}
@@ -254,8 +255,6 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							distInters = distance1;
 							pointInters = point1;
 						}
-						cout << "solution" << endl; //ca trouve aucune intersection !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-						//Ca va jamais ici donc si tu arrives a trouver pourquoi y a pas d'intersection...
 						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
 						{
 							point1 = inters.get()[0];

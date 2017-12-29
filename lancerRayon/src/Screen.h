@@ -37,8 +37,8 @@ public:
 	Coord3 getBlCorner();
 	Coord3 getTlCorner();
 	Coord3 getBrCorner();
-	float getHorResolution();
-	float getVerResolution();
+	unsigned int getHorResolution();
+	unsigned int getVerResolution();
 	std::vector<std::vector<Pixel>> getTabPixels();
 
 	void setColor(RGB c);
@@ -46,8 +46,8 @@ public:
 	void setBlCorner(const Coord3& c);
 	void setTlCorner(const Coord3& c);
 	void setBrCorner(const Coord3& c);
-	void setHorResolution(const float& res);
-	void setVerResolution(const float res);
+	void setHorResolution(const unsigned int& res);
+	void setVerResolution(const unsigned int res);
 };
 
 #endif /* SCREEN_H_ */
