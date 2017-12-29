@@ -44,15 +44,27 @@ void Scene::setCamera(Coord3 c){
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
-	valarray<float> vectDirecteur(3);
-	vectDirecteur[0] = coordPoint.getX() - light.getPosition().getX();
-	vectDirecteur[1] = coordPoint.getY() - light.getPosition().getY();
-	vectDirecteur[2] = coordPoint.getZ() - light.getPosition().getZ();
+	valarray<float> vectDirecteur = Rayon::calculVecteur(coordPoint,light.getPosition());
+	boost::optional<Coord3*> inters = new Coord3();
+	float epsilon = 0.05;
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
-		if(Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition()) != boost::none)
-			return false;
+		inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
+		if(inters != boost::none)
+		{
+			float distance1 = sqrt(pow(inters.get()[0].getX() - coordPoint.getX(), 2)
+					+ pow(inters.get()[0].getY() - coordPoint.getY(), 2)
+					+ pow(inters.get()[0].getZ() - coordPoint.getZ(), 2));
+			if(distance1 > epsilon)
+			{
+				cout << "Intersection bloquant la source" << endl;
+				cout << "Objet :" << endl;
+				cout << "Position sans lumiere" << endl;
+				cout << "Objet :" << endl;
+				return false;
+			}
+		}
 	}
 	return true;
 }
@@ -287,7 +299,6 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				{
 					if(Scene::eclaireParSource(pointInters))
 					{
-						
 						vectDirecteur = Rayon::calculVecteur(camera,pointInters);
 						float cos = Rayon::calculCos(vectDirecteur,objet,pointInters);
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
@@ -298,6 +309,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				distInters = 0;
 			}
 		}
+	screen.setTabPixels(tabPixels);
 }
 void Scene::write_image(){ //Creation du fichier ppm
 	std::ofstream outfile;

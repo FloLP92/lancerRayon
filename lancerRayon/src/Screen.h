@@ -48,6 +48,7 @@ public:
 	void setBrCorner(const Coord3& c);
 	void setHorResolution(const unsigned int& res);
 	void setVerResolution(const unsigned int res);
+	void setTabPixels(std::vector<std::vector<Pixel>> chTabPixels);
 };
 
 #endif /* SCREEN_H_ */

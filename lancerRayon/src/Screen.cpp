@@ -102,3 +102,6 @@ void Screen::setHorResolution(const unsigned int& res){
 void Screen::setVerResolution(const unsigned int res){
 	verRes = res;
 }
+void Screen::setTabPixels(std::vector<std::vector<Pixel>> chTabPixels){
+	tabPixels = chTabPixels;
+}
