@@ -26,7 +26,7 @@ private:
 public:
 	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, float chHorRes, float chVerRes): color(chColor),
 		tlCorner(chTlCorner), trCorner(chTrCorner), blCorner(chBlCorner), horRes(chHorRes), verRes(chVerRes){}
-	Screen(){horRes = 0; verRes = 0;}
+	Screen(){}
 	virtual ~Screen();
 	void calculBrCorner();
 	void calculResVer();
@@ -46,7 +46,7 @@ public:
 	void setBlCorner(const Coord3& c);
 	void setTlCorner(const Coord3& c);
 	void setBrCorner(const Coord3& c);
-	void setHorResolution(const float res);
+	void setHorResolution(const float& res);
 	void setVerResolution(const float res);
 };
 

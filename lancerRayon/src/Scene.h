@@ -21,6 +21,7 @@ public:
 	void lecture();
 	bool eclaireParSource(Coord3 coordPoint);
 	bool calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter);
+	void imageSansReflexion();
 	/*getters & setters*/
 	Screen getScreen();
 	void setScreen(Screen s);

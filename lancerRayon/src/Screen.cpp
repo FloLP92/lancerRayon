@@ -31,6 +31,8 @@ void Screen::calculResVer() //Calcul res verticale selon les bords
 			+ pow((brCorner.getY() - blCorner.getY()), 2)
 			+ pow((brCorner.getZ() - blCorner.getZ()), 2));
 	std::cout<< "Point A "<<std::endl;
+	std::cout<< brCorner <<std::endl;
+	std::cout<< blCorner <<std::endl;
 
 	unsigned int longueurVerticale = sqrt(
 			pow((tlCorner.getX() - blCorner.getX()), 2)
@@ -38,7 +40,7 @@ void Screen::calculResVer() //Calcul res verticale selon les bords
 			+ pow((tlCorner.getZ() - blCorner.getZ()),2));
 	std::cout<< "Point B "<<std::endl;
 	std::cout<< horRes <<std::endl;
-	std::cout<< longueurHorizontale <<std::endl;
+	std::cout<< longueurHorizontale << std::endl;
 	std::cout<< "Point bis "<<std::endl;
 	verRes = (horRes/longueurHorizontale)*longueurVerticale;
 	std::cout<< "Point C "<<std::endl;
@@ -62,7 +64,6 @@ void Screen::creationPixels()
 	}
 }
 
-
 RGB Screen::getColor(){
 	return color;
 }
@@ -84,7 +85,6 @@ float Screen::getHorResolution(){
 float Screen::getVerResolution(){
 	return verRes;
 }
-
 std::vector<std::vector<Pixel>> Screen::getTabPixels(){
 	return tabPixels;
 }
@@ -104,7 +104,7 @@ void Screen::setTlCorner(const Coord3& c){
 void Screen::setBrCorner(const Coord3& c){
 	brCorner = c;
 }
-void Screen::setHorResolution(const float res){
+void Screen::setHorResolution(const float& res){
 	horRes = res;
 }
 void Screen::setVerResolution(const float res){

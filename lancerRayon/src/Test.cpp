@@ -41,6 +41,7 @@ void Test::test1(){
 	for(unsigned int i(0);i< sizeof(test2)/sizeof(*test2);i++){
 		//cout << test2.get()[i] << endl;
 	}
+
 }
 
 void Test::testParsing(){

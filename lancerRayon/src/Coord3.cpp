@@ -33,14 +33,13 @@ Coord3 Coord3::paralleleCoord3(const Coord3 c1, const Coord3 middle)
 }
 
 
-
-float Coord3::getX(){
+float Coord3::getX() const{
 	return x;
 }
-float Coord3::getY(){
+float Coord3::getY() const{
 	return y;
 }
-float Coord3::getZ(){
+float Coord3::getZ() const{
 	return z;
 }
 void Coord3::setX(float xx){

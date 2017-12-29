@@ -60,8 +60,6 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	}
 }
 
-
-
 bool Rayon::calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter){
 
 	//First Step : get normal vector
@@ -107,4 +105,12 @@ RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 
 	//retravailler float en int
 	return couleurFinale;
+}
+std::valarray<float> Rayon::calculVecteur(const Coord3 c1, const Coord3 c2)
+{
+	std::valarray<float> vect;
+	vect[0] = (c2.getX() - c1.getX());
+	vect[1] = (c2.getY() - c1.getY());
+	vect[2] = (c2.getZ() - c1.getZ());
+	return vect;
 }

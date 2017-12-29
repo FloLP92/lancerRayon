@@ -8,6 +8,7 @@
 #ifndef COORD3_H_
 #define COORD3_H_
 #include <iostream>
+#include<valarray>
 
 class Coord3 {
 private:
@@ -25,9 +26,9 @@ public:
 	Coord3 operator/ (const int nb) const;//Division d un Coord3
 	Coord3& operator= (const Coord3&);
 
-	float getX();
-	float getY();
-	float getZ();
+	float getX() const;
+	float getY() const;
+	float getZ() const;
 	void setX(float xx);
 	void setY(float yy);
 	void setZ(float zz);

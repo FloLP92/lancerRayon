@@ -7,6 +7,7 @@
 #include <boost/algorithm/string.hpp>
 #include "Light.h"
 #include "Rayon.h"
+#include <cmath>
 
 using namespace std;
 
@@ -75,39 +76,37 @@ void Scene::lecture(){
 
 	std::string line;
 	int dataRead = 0; // nombre de données lues
+	string aP,bP,cP,dP,eP,fP,gP,hP,infos;
+	float aF,bF,cF,dF,eF,fF,gF,hF;
+	std::string::size_type sz; //Variable used to convert string into float (or int)
+	Light l;
+	this->setLight(l);
+	Screen s;
+	this->setScreen(s);
+	Coord3 tl;
+	Coord3 tr;
+	Coord3 bl;
+	Coord3 br;
+	unsigned int horres = 0;
+	unsigned int verres = 0;
+	RGB colorBG;
+	Coord3 coordLight;
+	RGB colorLight;
+	l.setPosition(coordLight);
+	l.setColor(colorLight);
+	this->screen.setColor(colorBG);
+	this->screen.setHorResolution(horres);
+	this->screen.setVerResolution(verres);
 	while (std::getline(infile, line))
 	{
 	    std::istringstream iss(line);// tete de lecture
-			Light l;
-			this->setLight(l);
-	   	string aP,bP,cP,dP,eP,fP,gP,hP,infos;
-	   	float aF,bF,cF,dF,eF,fF,gF,hF;
-			std::string::size_type sz; //Variable used to convert string into float (or int)
+
 	   	//on commence par lire le premier mot : si il contient # au début c'est un comment donc on passe
 	   	//sinon c'est une donnée utile : on sait quelle donnee utile c'est parce que on a un compteur qui permet
 	   	// de savoir combien de donnees utiles on a lues. (donc ou on en est dans le fichier).
 	   	// et on peut traiter en fonction de ce que c'est (utilisation switch).
 
-			Screen s;
-			this->setScreen(s);
-			Coord3 tl;
-			Coord3 tr;
-			Coord3 bl;
-			Coord3 br;
-			this->screen.setTrCorner(tr);
-			this->screen.setTlCorner(tl);
-			this->screen.setBlCorner(bl);
-			this->screen.setBrCorner(br);
-			unsigned int horres = 0;
-			unsigned int verres = 0;
-			RGB colorBG;
-			Coord3 coordLight;
-			RGB colorLight;
-			l.setPosition(coordLight);
-			l.setColor(colorLight);
-			this->screen.setColor(colorBG);
-			this->screen.setHorResolution(horres);
-			this->screen.setVerResolution(verres);
+
 	    if (!(iss >> aP)) { break; } // On lit le premier mot de la ligne
 	    else if(aP.compare("#")!=0){ // on ne tombe par sur un commentaire : c'est une donnee utile
 	    	dataRead++; // On incremente le nombre de données utiles lues
@@ -174,7 +173,7 @@ void Scene::lecture(){
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
 						colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
-
+						this->screen.setColor(colorBG);
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
 	    			iss >> bP >> cP >> dP >> eP >> fP;
@@ -227,22 +226,59 @@ void Scene::lecture(){
 	    	}//end switch
 	    }// end if comment
 	}// end while read
-	std::cout<< "tlCorner " << screen.getTlCorner() << std::endl;
-	std::cout<< "aa" << screen.getHorResolution() <<std::endl;
-	std::cout<< "ccc " << std::endl;
-	std::cout<< "Point 1 "<<std::endl;
+	this->screen.setTrCorner(tr);
+	this->screen.setTlCorner(tl);
+	this->screen.setBlCorner(bl);
+	this->screen.setBrCorner(br);
 	screen.calculBrCorner();
-	std::cout<< "Point 2 "<<std::endl;
 	screen.calculResVer();
-	std::cout<< "Point 3 "<<std::endl;
 	screen.creationPixels();
-	std::cout<< "Point 4 "<<std::endl;
 }
+void Scene::imageSansReflexion()
+{
+	vector<vector<Pixel>> tabPixels = screen.getTabPixels();
+	boost::optional<Coord3*> inters = new Coord3(); //Tous nos points intersections
+	valarray<float> vectDirecteur;
+	Coord3 pointInters; //Point le plus proche
+	for (unsigned int i(0); i < screen.getVerResolution(); ++i)
+		{
+			for(unsigned int j(0); j < screen.getHorResolution(); ++j)
+			{
+				for(Sphere sphere : tabSphere)
+				{
+					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
+					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius());
+					if(inters != boost::none)//On a au moins un point d intersections
+					{
+						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
+						{
+							Coord3 point1 = inters.get()[0];
+							Coord3 point2 = inters.get()[2];
+							double distance1 = sqrt(pow(camera.getX() - point1.getX(), 2)
+																		+ pow(camera.getY() - point1.getY(), 2)
+																		+ pow(camera.getZ() - point1.getZ(), 2));
+							double distance2 = sqrt(pow(camera.getX() - point2.getX(), 2)
+																		+ pow(camera.getY() - point2.getY(), 2)
+																		+ pow(camera.getZ() - point2.getZ(), 2));
+							pointInters = distance1 < distance2 ? distance1 : distance2;
+						}
+						else // 1 seul point, pas de choix possible
+							pointInters = inters.get()[0];
+						if(Scene::eclaireParSource(pointInters))
+						{
 
+						}
+						else //Pas dans la lumiere, on laisse couleur du fond
+							tabPixels[i][j].setColor(screen.getColor());
+					}
+				}
+			}
+		}
+}
 void Scene::write_image(){ //Creation du fichier ppm
 	std::ofstream outfile;
 	outfile.open("new.ppm");
-	outfile<<"P6\n";
+	outfile<<"P3\n";
 	outfile<<this->screen.getHorResolution()<<" "<<this->screen.getVerResolution()<<"\n";
 	outfile<<"255\n";
 
