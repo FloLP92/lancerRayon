@@ -23,7 +23,7 @@ private:
 public:
 	Rayon();
 	virtual ~Rayon();
-	static boost::optional<Coord3*> calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere);
+	static boost::optional<Coord3*> calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origine);
 	bool calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter);
 	static float calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter);
 	static RGB calculCouleur(float cos,RGB couleurInter,RGB couleurSource);

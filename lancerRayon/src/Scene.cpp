@@ -51,7 +51,7 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
-		if(Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius()) != boost::none)
+		if(Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition()) != boost::none)
 			return false;
 	}
 	return true;
@@ -244,7 +244,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
 				{
 					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
-					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius());
+					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),camera);
 					if(inters != boost::none)//On a au moins un point d intersections
 					{
 						if(distInters == 0)//Pas d intersection, on le met direct

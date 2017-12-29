@@ -21,11 +21,11 @@ Rayon::~Rayon() {
 	// TODO Auto-generated destructor stub
 }
 
-boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
+boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
 	//but trouver les coef de lequation de degre 2
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
-	float b = 2*vectDirecteur[0]*ptSphere.getX()*(-1)+ 2*vectDirecteur[1]*ptSphere.getY()*(-1) + 2*vectDirecteur[1]*ptSphere.getZ()*(-1);
-	float c = ptSphere.getX()*ptSphere.getX()+ptSphere.getY()*ptSphere.getY()+ptSphere.getZ()*ptSphere.getZ()-RayonSphere*RayonSphere;
+	float b = 2*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX())*(-1) + 2*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY())*(-1) + 2*vectDirecteur[1]*(origineRayon.getZ()-ptSphere.getZ())*(-1);
+	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
 	if(delta<0){

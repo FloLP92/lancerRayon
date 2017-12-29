@@ -23,7 +23,8 @@ void Test::test1(){
 	vect1[0] = 1;vect1[1] = 0; vect1[2] = 0;
 	float rayonSphere = 3;
 	boost::optional<Coord3*> test = new Coord3();
-	test = Rayon::calculPtIntersection(sphere1, vect1,rayonSphere);
+	Coord3 origine = Coord3(0,0,0);
+	test = Rayon::calculPtIntersection(sphere1, vect1,rayonSphere,origine);
 	assert(test != boost::none);
 	cout << "1er test" << endl;
 	for(unsigned int i(0);i< sizeof(test)/sizeof(*test);i++){
@@ -35,7 +36,7 @@ void Test::test1(){
 	vect2[0] = 0;vect2[1] = 1;vect2[2] = 0;
 	float r2 = 3;
 	boost::optional<Coord3*> test2 = new Coord3();
-	test2 = Rayon::calculPtIntersection(sphere2, vect2,r2);
+	test2 = Rayon::calculPtIntersection(sphere2, vect2,r2,origine);
 	assert(test != boost::none);
 	cout << "2eme test" << endl;
 	for(unsigned int i(0);i< sizeof(test2)/sizeof(*test2);i++){
@@ -56,12 +57,13 @@ void Test::testlectureEtInters()
 {
 	Scene scene;
 	scene.lecture();
+	Coord3 origine = Coord3(0,0,0);
 	Screen screen = scene.getScreen();
 	valarray<float> vectDirecteur = Rayon::calculVecteur(scene.getCamera(),screen.getTabPixels()[1][3].getCoord3());
 	cout << "coord pixel " << screen.getTabPixels()[1][3] << endl;
 	Sphere sphere = scene.getTabSphere()[0];
 	cout << "sphere " << sphere << endl;
-	boost::optional<Coord3*> inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius());
+	boost::optional<Coord3*> inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),origine);
 }
 void Test::testParsing(){
 	Scene scene;
