@@ -28,7 +28,6 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	float b = 2*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX())*(-1) + 2*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY())*(-1) + 2*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ())*(-1);
 	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
-	//std::cout<<" a : "<<a<<" b : "<<b<<" c: "<<c<<std::endl;
 	float delta = b*b-4*a*c; //calcul du delta
 	if(delta<0){
 		return boost::none; // On ne peut pas avoir de solutions dans r
@@ -93,9 +92,9 @@ float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInte
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
 	float red,green,blue;
-	red = couleurInter.red*couleurSource.red;
-	green = couleurInter.green*couleurSource.green;
-	blue = couleurInter.blue*couleurSource.blue;
+	red = couleurInter.red*couleurSource.red/255;
+	green = couleurInter.green*couleurSource.green/255;
+	blue = couleurInter.blue*couleurSource.blue/255;
 	red *= cos;
 	green *= cos;
 	blue *= cos;

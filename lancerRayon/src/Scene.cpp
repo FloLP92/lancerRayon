@@ -35,7 +35,6 @@ vector<Sphere> Scene::getTabSphere(){
 Coord3 Scene::getCamera(){
 	return camera;
 }
-
 void Scene::setCamera(Coord3 c){
 	camera = c;
 }
@@ -58,10 +57,6 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 					+ pow(inters.get()[0].getZ() - coordPoint.getZ(), 2));
 			if(distance1 > epsilon)
 			{
-				cout << "Intersection bloquant la source" << endl;
-				cout << "Objet :" << endl;
-				cout << "Position sans lumiere" << endl;
-				cout << "Objet :" << endl;
 				return false;
 			}
 			if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
@@ -71,10 +66,6 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 								+ pow(inters.get()[1].getZ() - coordPoint.getZ(), 2));
 				if(distance2 > epsilon)
 				{
-					cout << "Intersection bloquant la source" << endl;
-					cout << "Objet :" << endl;
-					cout << "Position sans lumiere" << endl;
-					cout << "Objet :" << endl;
 					return false;
 				}
 			}
@@ -147,9 +138,9 @@ void Scene::lecture(){
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
 	    			cout << aP << " " << bP << " " << cP << endl;
 
-						aF = std::stoi(aP,&sz);
-						bF = std::stoi(bP,&sz);
-						cF = std::stoi(cP,&sz);
+						aF = (float)std::stoi(aP,&sz);
+						bF = (float)std::stoi(bP,&sz);
+						cF = (float)std::stoi(cP,&sz);
 						tl.setX(aF); tl.setY(bF); tl.setZ(cF);
 
 	    			break;
@@ -184,10 +175,9 @@ void Scene::lecture(){
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());// remove commas
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
 	    			cout << aP << " " << bP << " " << cP << endl;
-						aF = std::stoi(aP,&sz);
-						bF = std::stoi(bP,&sz);
-						cF = std::stoi(cP,&sz);
-						colorBG.red = aF; colorBG.green = bF; colorBG.blue = cF;
+	    				colorBG.red = std::stoi(aP,&sz);
+	    				colorBG.green = std::stoi(bP,&sz);
+	    				colorBG.blue = std::stoi(cP,&sz);
 						this->screen.setColor(colorBG);
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
@@ -204,12 +194,11 @@ void Scene::lecture(){
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
-						dF = std::stoi(dP,&sz);
-						eF = std::stoi(eP,&sz);
-						fF = std::stoi(fP,&sz);
+						colorLight.red = std::stoi(dP,&sz);
+						colorLight.green = std::stoi(eP,&sz);
+						colorLight.blue = std::stoi(fP,&sz);
 						coordLight.setX(aF); coordLight.setY(bF); coordLight.setZ(cF);
 						this->light.setPosition(coordLight);
-						colorLight.red = dF; colorLight.green = eF; colorLight.blue = fF;
 						this->light.setColor(colorLight);
 	    			break;
 
@@ -229,13 +218,12 @@ void Scene::lecture(){
 						bF = std::stof(bP,&sz);//coordy
 						cF = std::stof(cP,&sz);//coordz
 						dF = std::stof(dP,&sz);//radius
-						eF = std::stoi(eP,&sz);//red
-						fF = std::stoi(fP,&sz);//green
-						gF = std::stoi(eP,&sz);//blue
+						colorSphere.red = std::stoi(eP,&sz);//red
+						colorSphere.green = std::stoi(fP,&sz);//green
+						colorSphere.blue = std::stoi(eP,&sz);//blue
 						hF = std::stof(fP,&sz);//reflex
 
 						coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
-						colorSphere.red = eF; colorSphere.green = fF; colorSphere.blue = gF;
 						Sphere sphere1 = Sphere(dF,coordSphere,hF,colorSphere);
 						this->tabSphere.push_back(sphere1);
 						std::cout<<this->getTabSphere().size()<<std::endl;
@@ -284,6 +272,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							distance1 = Rayon::calculDistance(camera,point1);
 							distInters = distance1;
 							pointInters = point1;
+							objet = sphere;
 						}
 						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
 						{
@@ -295,11 +284,13 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							{
 								distInters = distance1;
 								pointInters = point1;
+								objet = sphere;
 							}
 							if(distance2 < distInters)
 							{
 								distInters = distance2;
 								pointInters = point2;
+								objet = sphere;
 							}
 						}
 						else // 1 seul point, pas de choix possible
@@ -311,6 +302,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							{
 								distInters = distance1;
 								pointInters = point1;
+								objet = sphere;
 							}
 						}
 					}

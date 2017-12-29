@@ -26,11 +26,11 @@ void Screen::calculBrCorner()
 void Screen::calculResVer() //Calcul res verticale selon les bords
 {
 
-	unsigned int longueurHorizontale = sqrt(
+	unsigned int longueurHorizontale = (unsigned int)sqrt(
 			pow((brCorner.getX() - blCorner.getX()), 2)
 			+ pow((brCorner.getY() - blCorner.getY()), 2)
 			+ pow((brCorner.getZ() - blCorner.getZ()), 2));
-	unsigned int longueurVerticale = sqrt(
+	unsigned int longueurVerticale = (unsigned int)sqrt(
 			pow((tlCorner.getX() - blCorner.getX()), 2)
 			+ pow((tlCorner.getY() - blCorner.getY()), 2)
 			+ pow((tlCorner.getZ() - blCorner.getZ()),2));
@@ -47,9 +47,9 @@ void Screen::creationPixels()
 		for(unsigned int k(0); k < horRes; ++k)
 		{
 			tabPixels[j][k].setCoord3(Coord3(
-						tlCorner.getX() + ((float)j/verRes)*(trCorner.getX() - tlCorner.getX()) + ((float)k/horRes)* (blCorner.getX() - tlCorner.getX()),
-						tlCorner.getY() + ((float)j/verRes)*(trCorner.getY() - tlCorner.getY()) + ((float)k/horRes)* (blCorner.getY() - tlCorner.getY()),
-						tlCorner.getZ() + ((float)j/verRes)*(trCorner.getZ() - tlCorner.getZ()) + ((float)k/horRes)* (blCorner.getZ() - tlCorner.getZ())));
+						tlCorner.getX() + (j/(float)verRes)*(trCorner.getX() - tlCorner.getX()) + (k/(float)horRes)* (blCorner.getX() - tlCorner.getX()),
+						tlCorner.getY() + (j/(float)verRes)*(trCorner.getY() - tlCorner.getY()) + (k/(float)horRes)* (blCorner.getY() - tlCorner.getY()),
+						tlCorner.getZ() + (j/(float)verRes)*(trCorner.getZ() - tlCorner.getZ()) + (k/(float)horRes)* (blCorner.getZ() - tlCorner.getZ())));
 			tabPixels[j][k].setColor(this->color);
 		}
 
