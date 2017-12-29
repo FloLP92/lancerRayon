@@ -24,9 +24,10 @@ Rayon::~Rayon() {
 boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
 	//but trouver les coef de lequation de degre 2
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
-	float b = 2*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX())*(-1) + 2*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY())*(-1) + 2*vectDirecteur[1]*(origineRayon.getZ()-ptSphere.getZ())*(-1);
+	float b = 2*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX())*(-1) + 2*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY())*(-1) + 2*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ())*(-1);
 	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
+	//std::cout<<" a : "<<a<<" b : "<<b<<" c: "<<c<<std::endl;
 	float delta = b*b-4*a*c; //calcul du delta
 	if(delta<0){
 		return boost::none; // On ne peut pas avoir de solutions dans r
@@ -39,6 +40,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 			solution.push_back(s);
 		}
 		else{
+
 			float s1 = -b-sqrt(delta)/2*a;
 			float s2 = -b+sqrt(delta)/2*a;
 			if(s1>0)
