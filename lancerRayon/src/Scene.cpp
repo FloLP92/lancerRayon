@@ -45,9 +45,9 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
 	valarray<float> vectDirecteur;
-	vectDirecteur[coordPoint.getX() - light.getPosition().getX()];
-	vectDirecteur[coordPoint.getY() - light.getPosition().getY()];
-	vectDirecteur[coordPoint.getZ() - light.getPosition().getZ()];
+	vectDirecteur[light.getPosition().getX() - coordPoint.getX()];
+	vectDirecteur[light.getPosition().getY() - coordPoint.getY()];
+	vectDirecteur[light.getPosition().getZ() - coordPoint.getZ()];
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
@@ -289,6 +289,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				{
 					if(Scene::eclaireParSource(pointInters))
 					{
+						
 						vectDirecteur = Rayon::calculVecteur(camera,pointInters);
 						float cos = Rayon::calculCos(vectDirecteur,objet,pointInters);
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
