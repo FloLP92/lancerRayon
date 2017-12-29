@@ -69,24 +69,20 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 }
 
 
-float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter){
-	//First Step : get normal vector
+float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
+		float scalaire = ((position.getX() - surface.getX()) * (sourceLumineuse.getX() - surface.getX())
+				+ (position.getY() - surface.getY()) * (sourceLumineuse.getY() - surface.getY())
+				+ (position.getZ() - surface.getZ()) * (sourceLumineuse.getZ() - surface.getZ()));
 
-		//First Step. Point 1 : get vector origin sphere and intersection
-		std::valarray<float> normale(3);
-		normale[0] = ptInter.getX()-s.getCenter().getX();
-		normale[1] = ptInter.getY()-s.getCenter().getY();
-		normale[2] = ptInter.getZ()-s.getCenter().getZ();
+		float normeN = sqrt(pow(position.getX() - surface.getX(), 2)
+				+ pow(position.getY() - surface.getY(), 2)
+				+ pow(position.getZ() - surface.getZ(), 2));
 
+		float normeR = sqrt(pow(sourceLumineuse.getX() - surface.getX(), 2)
+				+ pow(sourceLumineuse.getY() - surface.getY(), 2)
+				+ pow(sourceLumineuse.getZ() - surface.getZ(), 2));
 
-		//Second step : get cos
-
-		float cosi = rayonIncident[0]*normale[0] + rayonIncident[1]*normale[1] + rayonIncident[2]*normale[2];
-		float no = sqrt(normale[0]*normale[0] + normale[1]*normale[1] + normale[2]*normale[2])*sqrt(rayonIncident[0]*rayonIncident[0] + rayonIncident[1]*rayonIncident[1] + rayonIncident[2]*rayonIncident[2]);
-	  //std::cout<<cosi<<std::endl;
-		//std::cout<<no<<std::endl;
-		cosi = cosi/no;
-		return cosi;
+	return scalaire/(normeN * normeR);
 }
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
@@ -94,9 +90,9 @@ RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	red = (couleurInter.red*couleurSource.red)/255;
 	green = (couleurInter.green*couleurSource.green)/255;
 	blue = (couleurInter.blue*couleurSource.blue)/255;
-	red *= cos;
-	green *= cos;
-	blue *= cos;
+	//red *= cos;
+	//green *= cos;
+	//blue *= cos;
 
 	couleurFinale.red = (int) red;
 	couleurFinale.green = (int) green;

@@ -269,28 +269,31 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 
 					if(inters != boost::none)//On a au moins un point d intersections
 					{
+						//std::cout<<" x : "<<inters.get()[0].getX()<<" y : "<<inters.get()[0].getY()<<" z: "<<inters.get()[0].getZ()<<std::endl;
+						//std::cout<<" x : "<<inters.get()[1].getX()<<" y : "<<inters.get()[1].getY()<<" z: "<<inters.get()[1].getZ()<<std::endl;
 
-						if(distInters == 0)//Pas d intersection, on le met direct
+						/*if(distInters == 0)//Pas d intersection, on le met direct
 						{
 							point1 = inters.get()[0];
 							distance1 = Rayon::calculDistance(camera,point1);
 							distInters = distance1;
 							pointInters = point1;
 							objet = sphere;
-						}
-						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
+						}*/
+						if(inters.get()[1].getX() != NULL) //On doit prendre le plus proche
 						{
+
 							point1 = inters.get()[0];
 							point2 = inters.get()[1];
 							distance1 = Rayon::calculDistance(camera,point1);
 							distance2 = Rayon::calculDistance(camera,point2);
-							if(distance1 < distInters)
+							if(distance1 < distance2)
 							{
 								distInters = distance1;
 								pointInters = point1;
 								objet = sphere;
 							}
-							if(distance2 < distInters)
+							else
 							{
 								distInters = distance2;
 								pointInters = point2;
@@ -302,28 +305,33 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							point1 = inters.get()[0];
 
 							distance1 = Rayon::calculDistance(camera,point1);
-							if(distance1 < distInters)
-							{
-								distInters = distance1;
-								pointInters = point1;
-								objet = sphere;
-							}
+							distInters = distance1;
+							pointInters = point1;
+							objet = sphere;
 						}
 					}
 				}
 				if(distInters != 0)//On a eu au moins une intersection
 				{
-					for(Sphere sphere : tabSphere){
-						if(Rayon::calculDistance(pointInters,sphere.getCenter()) - sphere.getRadius() < 1){
+
+					for(Sphere sphere : tabSphere){ // on rattache le point d'intersection a sa sphere
+						//std::cout<< Rayon::calculDistance(pointInters,sphere.getCenter()) <<std::endl;
+						if(Rayon::calculDistance(pointInters,sphere.getCenter()) - sphere.getRadius() == 0){
 							objet = sphere;
-							std::cout<<"hello world"<<std::endl;
 						}
 					}
+
 					if(Scene::eclaireParSource(pointInters))
 					{
-						vectDirecteur = Rayon::calculVecteur(this->light.getPosition(),pointInters);
-						float cos = Rayon::calculCos(vectDirecteur,objet,pointInters);
 
+						vectDirecteur = Rayon::calculVecteur(this->light.getPosition(),pointInters);
+						float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
+						vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
+						vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
+						vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
+						float cos = Rayon::calculCos(objet.getCenter(),pointInters,light.getPosition());
+						std::cout<<" xx: "<<cos<<std::endl;
+						std::cout<<" x : "<<light.getColor().red<<" y : "<<light.getColor().green<<" z: "<<light.getColor().blue<<std::endl;
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
 					}
 					else //Pas dans la lumiere, on laisse couleur du fond
