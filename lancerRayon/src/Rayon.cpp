@@ -29,7 +29,6 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
 	if(delta<0){
-		std::cout << "begin " << a << " " << b << " " << c << " end" << std::endl;
 		return boost::none; // On ne peut pas avoir de solutions dans r
 	}
 	else
@@ -88,7 +87,32 @@ bool Rayon::calculRayonReflechi(std::valarray<float> rayonIncident,Sphere s,Coor
 	return false;
 
 }
+float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter){
+	//First Step : get normal vector
 
+		//First Step. Point 1 : get vector origin sphere and intersection
+		std::valarray<float> rayon(3);
+		rayon[0] = ptInter.getX()-s.getCenter().getX();
+		rayon[1] = ptInter.getY()-s.getCenter().getY();
+		rayon[2] = ptInter.getZ()-s.getCenter().getZ();
+
+		//First Step. Point 2 : norme
+		float n = sqrt(rayon[0]*rayon[0] + rayon[1]*rayon[1] + rayon[2]*rayon[2]);
+
+		//First Step. Point 3 : normale
+		std::valarray<float> normale (3);
+		normale[0] = rayon[0]/n;
+		normale[1] = rayon[1]/n;
+		normale[2] = rayon[2]/n;
+
+		//Second step : get cos
+
+		float cos = rayonIncident[0]*normale[0] + rayonIncident[1]*normale[1] + rayonIncident[2]*normale[2];
+		float no = sqrt(normale[0]*normale[0] + normale[1]*normale[1] + normale[2]*normale[2])*sqrt(rayonIncident[0]*rayonIncident[0] + rayonIncident[1]*rayonIncident[1] + rayonIncident[2]*rayonIncident[2]);
+		cos = cos/no;
+
+		return cos;
+}
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
 	float red,green,blue;
@@ -108,9 +132,15 @@ RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 }
 std::valarray<float> Rayon::calculVecteur(const Coord3 c1, const Coord3 c2)
 {
-	std::valarray<float> vect;
+	std::valarray<float> vect(3);
 	vect[0] = (c2.getX() - c1.getX());
 	vect[1] = (c2.getY() - c1.getY());
 	vect[2] = (c2.getZ() - c1.getZ());
 	return vect;
+}
+float Rayon::calculDistance(Coord3 c1, Coord3 c2){
+	float dist = sqrt(pow(c1.getX() - c2.getX(), 2)
+			+ pow(c1.getY() - c2.getY(), 2)
+			+ pow(c1.getZ() - c2.getZ(), 2));
+	return dist;
 }

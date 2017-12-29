@@ -49,28 +49,6 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	return true;
 }
 
-//Calcul de l image sans reflexion
-bool Scene::calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter)
-{
-
-	boost::optional<Coord3*> intersections = new Coord3();
-	for(unsigned int i(0); i < screen.getVerResolution(); i++)
-	{
-		for(unsigned int i(0); i < screen.getHorResolution(); i++)
-		{
-			for(Sphere sphere : tabSphere) //On teste pour chaque objet
-			{
-				//intersections = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius())
-				/*if(sphere != boost::none)
-				{
-
-				}*/
-			}
-		}
-	}
-	return false;
-
-}
 void Scene::lecture(){
 	std::ifstream infile("aParser.txt");
 
@@ -234,44 +212,77 @@ void Scene::lecture(){
 	screen.calculResVer();
 	screen.creationPixels();
 }
-void Scene::imageSansReflexion()
+void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 {
 	vector<vector<Pixel>> tabPixels = screen.getTabPixels();
 	boost::optional<Coord3*> inters = new Coord3(); //Tous nos points intersections
 	valarray<float> vectDirecteur;
+	Sphere objet;
 	Coord3 pointInters; //Point le plus proche
+	Coord3 point1, point2;
+	float distInters = 0; //distance du point le plus proche
+	float distance1,distance2;
+	cout << "Point A" << endl;
 	for (unsigned int i(0); i < screen.getVerResolution(); ++i)
 		{
 			for(unsigned int j(0); j < screen.getHorResolution(); ++j)
 			{
-				for(Sphere sphere : tabSphere)
+				for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
 				{
 					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
 					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius());
 					if(inters != boost::none)//On a au moins un point d intersections
 					{
+						if(distInters == 0)//Pas d intersection, on le met direct
+						{
+							point1 = inters.get()[0];
+							distance1 = Rayon::calculDistance(camera,point1);
+							distInters = distance1;
+							pointInters = point1;
+						}
+						cout << "solution" << endl; //ca trouve aucune intersection !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+						//Ca va jamais ici donc si tu arrives a trouver pourquoi y a pas d'intersection...
 						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
 						{
-							Coord3 point1 = inters.get()[0];
-							Coord3 point2 = inters.get()[2];
-							double distance1 = sqrt(pow(camera.getX() - point1.getX(), 2)
-																		+ pow(camera.getY() - point1.getY(), 2)
-																		+ pow(camera.getZ() - point1.getZ(), 2));
-							double distance2 = sqrt(pow(camera.getX() - point2.getX(), 2)
-																		+ pow(camera.getY() - point2.getY(), 2)
-																		+ pow(camera.getZ() - point2.getZ(), 2));
-							pointInters = distance1 < distance2 ? distance1 : distance2;
+							point1 = inters.get()[0];
+							point2 = inters.get()[2];
+							distance1 = Rayon::calculDistance(camera,point1);
+							distance2 = Rayon::calculDistance(camera,point2);
+							if(distance1 < distInters)
+							{
+								distInters = distance1;
+								pointInters = point1;
+							}
+							if(distance2 < distInters)
+							{
+								distInters = distance2;
+								pointInters = point2;
+							}
 						}
 						else // 1 seul point, pas de choix possible
-							pointInters = inters.get()[0];
-						if(Scene::eclaireParSource(pointInters))
 						{
-
+							point1 = inters.get()[0];
+							distance1 = Rayon::calculDistance(camera,point1);
+							if(distance1 < distInters)
+							{
+								distInters = distance1;
+								pointInters = point1;
+							}
 						}
-						else //Pas dans la lumiere, on laisse couleur du fond
-							tabPixels[i][j].setColor(screen.getColor());
 					}
 				}
+				if(distInters != 0)//On a eu au moins une intersection
+				{
+					if(Scene::eclaireParSource(pointInters))
+					{
+						vectDirecteur = Rayon::calculVecteur(camera,pointInters);
+						float cos = Rayon::calculCos(vectDirecteur,objet,pointInters);
+						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
+					}
+					else //Pas dans la lumiere, on laisse couleur du fond
+						tabPixels[i][j].setColor(screen.getColor());
+				}
+				distInters = 0;
 			}
 		}
 }

@@ -30,20 +30,11 @@ void Screen::calculResVer() //Calcul res verticale selon les bords
 			pow((brCorner.getX() - blCorner.getX()), 2)
 			+ pow((brCorner.getY() - blCorner.getY()), 2)
 			+ pow((brCorner.getZ() - blCorner.getZ()), 2));
-	std::cout<< "Point A "<<std::endl;
-	std::cout<< brCorner <<std::endl;
-	std::cout<< blCorner <<std::endl;
-
 	unsigned int longueurVerticale = sqrt(
 			pow((tlCorner.getX() - blCorner.getX()), 2)
 			+ pow((tlCorner.getY() - blCorner.getY()), 2)
 			+ pow((tlCorner.getZ() - blCorner.getZ()),2));
-	std::cout<< "Point B "<<std::endl;
-	std::cout<< horRes <<std::endl;
-	std::cout<< longueurHorizontale << std::endl;
-	std::cout<< "Point bis "<<std::endl;
 	verRes = (horRes/longueurHorizontale)*longueurVerticale;
-	std::cout<< "Point C "<<std::endl;
 }
 void Screen::creationPixels()
 {
@@ -55,9 +46,9 @@ void Screen::creationPixels()
 		for(unsigned int k(0); k < horRes; ++k)
 		{
 			tabPixels[j][k].setCoord3(Coord3(
-						tlCorner.getX() + ((double)j/verRes)*(trCorner.getX() - tlCorner.getX()) + ((double)k/horRes)* (blCorner.getX() - tlCorner.getX()),
-						tlCorner.getY() + ((double)j/verRes)*(trCorner.getY() - tlCorner.getY()) + ((double)k/horRes)* (blCorner.getY() - tlCorner.getY()),
-						tlCorner.getZ() + ((double)j/verRes)*(trCorner.getZ() - tlCorner.getZ()) + ((double)k/horRes)* (blCorner.getZ() - tlCorner.getZ())));
+						tlCorner.getX() + ((float)j/verRes)*(trCorner.getX() - tlCorner.getX()) + ((float)k/horRes)* (blCorner.getX() - tlCorner.getX()),
+						tlCorner.getY() + ((float)j/verRes)*(trCorner.getY() - tlCorner.getY()) + ((float)k/horRes)* (blCorner.getY() - tlCorner.getY()),
+						tlCorner.getZ() + ((float)j/verRes)*(trCorner.getZ() - tlCorner.getZ()) + ((float)k/horRes)* (blCorner.getZ() - tlCorner.getZ())));
 			tabPixels[j][k].setColor(this->color);
 		}
 

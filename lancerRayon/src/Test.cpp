@@ -43,8 +43,24 @@ void Test::test1(){
 	}
 
 }
-
+void Test::testCalculVecteur()
+{
+	Coord3 a(2,5,1);
+	Coord3 b(9,2,10);
+	valarray<float> vect = Rayon::calculVecteur(a,b);
+	assert(vect[0] == 7);
+	assert(vect[1] == -3);
+	assert(vect[2] == 9);
+}
 void Test::testParsing(){
 	Scene scene;
 	scene.lecture();
+	Screen screen = scene.getScreen();
+	cout << "TlCorner " << screen.getTlCorner();
+	cout << "TrCorner " << screen.getTrCorner();
+	cout << "BlCorner " << screen.getBlCorner();
+	cout << "BrCorner " << screen.getBrCorner();
+	cout << "Hor Res " << screen.getHorResolution() << endl;
+	cout << "Ver Res " << screen.getVerResolution() << endl;
+	cout << "taille tableau sphere " << scene.getTabSphere().size()<< endl;
 }

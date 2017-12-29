@@ -17,8 +17,12 @@ private :
 	float reflexion;
 	RGB color;
 public:
+	Sphere();
 	Sphere(float chRadius, Coord3 chCenter, float chReflexion,RGB color);
 	virtual ~Sphere();
+
+	RGB getColor();
+	void setColor(RGB chColor);
 	float getRadius();
 	Coord3 getCenter();
 };
