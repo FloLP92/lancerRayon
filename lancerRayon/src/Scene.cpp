@@ -256,9 +256,14 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
 				{
 					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
+					//std::cout<<" x : "<<vectDirecteur[0]<<" y : "<<vectDirecteur[1]<<" z: "<<vectDirecteur[2]<<std::endl;
+					//std::cout<<" xx : "<<sphere.getCenter().getX()<<" yy : "<<sphere.getCenter().getY()<<" zz: "<<sphere.getCenter().getZ()<<std::endl;
+					//std::cout<<" xxx : "<<camera.getX()<<" yyy : "<<camera.getY()<<" zzz: "<<camera.getZ()<<std::endl;
 					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),camera);
+
 					if(inters != boost::none)//On a au moins un point d intersections
 					{
+						//std::cout<<" xO : "<<inters.get()[0].getX()<<std::endl;
 						if(distInters == 0)//Pas d intersection, on le met direct
 						{
 							point1 = inters.get()[0];
@@ -269,7 +274,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
 						{
 							point1 = inters.get()[0];
-							point2 = inters.get()[2];
+							point2 = inters.get()[1];
 							distance1 = Rayon::calculDistance(camera,point1);
 							distance2 = Rayon::calculDistance(camera,point2);
 							if(distance1 < distInters)
@@ -286,6 +291,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 						else // 1 seul point, pas de choix possible
 						{
 							point1 = inters.get()[0];
+
 							distance1 = Rayon::calculDistance(camera,point1);
 							if(distance1 < distInters)
 							{
@@ -297,6 +303,11 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				}
 				if(distInters != 0)//On a eu au moins une intersection
 				{
+					for(Sphere sphere : tabSphere){
+						if(Rayon::calculDistance(pointInters,sphere.getCenter()) - sphere.getRadius() < 1){
+							objet = sphere;
+						}
+					}
 					if(Scene::eclaireParSource(pointInters))
 					{
 						vectDirecteur = Rayon::calculVecteur(camera,pointInters);
