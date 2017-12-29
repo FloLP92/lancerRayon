@@ -51,7 +51,6 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
-
 		if(Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition()) != boost::none)
 			return false;
 	}
@@ -288,6 +287,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				{
 					if(Scene::eclaireParSource(pointInters))
 					{
+						
 						vectDirecteur = Rayon::calculVecteur(camera,pointInters);
 						float cos = Rayon::calculCos(vectDirecteur,objet,pointInters);
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
