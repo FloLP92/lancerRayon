@@ -267,7 +267,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							distance1 = Rayon::calculDistance(camera,point1);
 							distInters = distance1;
 							pointInters = point1;
-							//objet = sphere;
+							objet = sphere;
 						}
 						if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
 						{
@@ -279,13 +279,13 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							{
 								distInters = distance1;
 								pointInters = point1;
-								//objet = sphere;
+								objet = sphere;
 							}
 							if(distance2 < distInters)
 							{
 								distInters = distance2;
 								pointInters = point2;
-								//objet = sphere;
+								objet = sphere;
 							}
 						}
 						else // 1 seul point, pas de choix possible
@@ -296,7 +296,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							{
 								distInters = distance1;
 								pointInters = point1;
-								//objet = sphere;
+								objet = sphere;
 							}
 						}
 					}

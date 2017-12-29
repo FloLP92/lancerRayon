@@ -97,7 +97,9 @@ float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInte
 		rayon[2] = ptInter.getZ()-s.getCenter().getZ();
 
 		//First Step. Point 2 : norme
-		float n = sqrt(rayon[0]*rayon[0] + rayon[1]*rayon[1] + rayon[2]*rayon[2]);
+		float n = sqrt(rayon[0]*rayon[0] +
+				rayon[1]*rayon[1] +
+				rayon[2]*rayon[2]);
 
 		//First Step. Point 3 : normale
 		std::valarray<float> normale (3);
@@ -116,9 +118,9 @@ float Rayon::calculCos(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInte
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
 	float red,green,blue;
-	red = couleurInter.red*couleurSource.red;
-	green = couleurInter.green*couleurSource.green;
-	blue = couleurInter.blue*couleurSource.blue;
+	red = couleurInter.red*couleurSource.red/255;
+	green = couleurInter.green*couleurSource.green/255;
+	blue = couleurInter.blue*couleurSource.blue/255;
 	red *= cos;
 	green *= cos;
 	blue *= cos;
