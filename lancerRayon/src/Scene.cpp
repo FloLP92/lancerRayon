@@ -32,6 +32,14 @@ vector<Sphere> Scene::getTabSphere(){
 	return tabSphere;
 }
 
+Coord3 Scene::getCamera(){
+	return camera;
+}
+
+void Scene::setCamera(Coord3 c){
+	camera = c;
+}
+
 //renvoit boolean indiquant si point eclaire par source lumineuse
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
@@ -72,9 +80,12 @@ void Scene::lecture(){
 	RGB colorLight;
 	l.setPosition(coordLight);
 	l.setColor(colorLight);
-	this->screen.setColor(colorBG);
+	s.setColor(colorBG);
 	this->screen.setHorResolution(horres);
 	this->screen.setVerResolution(verres);
+
+	Coord3 coordSphere;
+	RGB colorSphere;
 	while (std::getline(infile, line))
 	{
 	    std::istringstream iss(line);// tete de lecture
@@ -150,7 +161,7 @@ void Scene::lecture(){
 						aF = std::stoi(aP,&sz);
 						bF = std::stoi(bP,&sz);
 						cF = std::stoi(cP,&sz);
-						colorBG.red = dF; colorBG.green = eF; colorBG.blue = fF;
+						colorBG.red = aF; colorBG.green = bF; colorBG.blue = cF;
 						this->screen.setColor(colorBG);
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
@@ -171,7 +182,9 @@ void Scene::lecture(){
 						eF = std::stoi(eP,&sz);
 						fF = std::stoi(fP,&sz);
 						coordLight.setX(aF); coordLight.setY(bF); coordLight.setZ(cF);
+						this->light.setPosition(coordLight);
 						colorLight.red = dF; colorLight.green = eF; colorLight.blue = fF;
+						this->light.setColor(colorLight);
 	    			break;
 
 	    		default : //reste des infos utiles cad la liste des cercles en bas du fichier
@@ -195,8 +208,8 @@ void Scene::lecture(){
 						gF = std::stoi(eP,&sz);//blue
 						hF = std::stof(fP,&sz);//reflex
 
-						Coord3 coordSphere; coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
-						RGB colorSphere; colorSphere.red = eF; colorSphere.green = fF; colorSphere.blue = gF;
+						coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
+						colorSphere.red = eF; colorSphere.green = fF; colorSphere.blue = gF;
 						Sphere sphere1 = Sphere(dF,coordSphere,hF,colorSphere);
 						this->tabSphere.push_back(sphere1);
 						std::cout<<this->getTabSphere().size()<<std::endl;
@@ -204,6 +217,7 @@ void Scene::lecture(){
 	    	}//end switch
 	    }// end if comment
 	}// end while read
+
 	this->screen.setTrCorner(tr);
 	this->screen.setTlCorner(tl);
 	this->screen.setBlCorner(bl);
@@ -292,6 +306,7 @@ void Scene::write_image(){ //Creation du fichier ppm
 	outfile<<"P3\n";
 	outfile<<this->screen.getHorResolution()<<" "<<this->screen.getVerResolution()<<"\n";
 	outfile<<"255\n";
+
 
 	std::vector<std::vector<Pixel>> tabPixels = this->screen.getTabPixels();
 	for (unsigned int j(0); j < this->screen.getVerResolution(); ++j)

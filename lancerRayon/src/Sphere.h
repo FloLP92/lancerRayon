@@ -25,6 +25,7 @@ public:
 	void setColor(RGB chColor);
 	float getRadius();
 	Coord3 getCenter();
+	float getReflexion();
 };
 
 #endif /* SPHERE_H_ */

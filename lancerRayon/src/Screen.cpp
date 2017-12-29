@@ -38,6 +38,7 @@ void Screen::calculResVer() //Calcul res verticale selon les bords
 }
 void Screen::creationPixels()
 {
+	
 	tabPixels.resize(verRes);
 	for (unsigned int i(0); i < verRes; ++i)
 		tabPixels[i].resize(horRes);

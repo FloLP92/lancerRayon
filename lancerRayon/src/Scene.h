@@ -27,6 +27,9 @@ public:
 	void setScreen(Screen s);
 	Light getLight();
 	void setLight(Light l);
+	Coord3 getCamera();
+	void setCamera(Coord3 c);
+
 	std::vector<Sphere> getTabSphere();
 
 };

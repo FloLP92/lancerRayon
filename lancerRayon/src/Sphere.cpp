@@ -32,3 +32,7 @@ float Sphere::getRadius(){
 Coord3 Sphere::getCenter(){
 	return center;
 }
+
+float Sphere::getReflexion(){
+	return reflexion;
+}
