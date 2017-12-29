@@ -24,7 +24,7 @@ private:
 	unsigned int verRes;
 	std::vector<std::vector<Pixel>> tabPixels;
 public:
-	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, float chHorRes, float chVerRes): color(chColor),
+	Screen(RGB chColor, Coord3 chTlCorner, Coord3 chTrCorner, Coord3 chBlCorner, unsigned int chHorRes, unsigned int chVerRes): color(chColor),
 		tlCorner(chTlCorner), trCorner(chTrCorner), blCorner(chBlCorner), horRes(chHorRes), verRes(chVerRes){}
 	Screen(){}
 	virtual ~Screen();
