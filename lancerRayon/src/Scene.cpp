@@ -46,14 +46,14 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	//On calcule le vecteur directeur
 	valarray<float> vectDirecteur = Rayon::calculVecteur(coordPoint,light.getPosition());
 	boost::optional<Coord3*> inters = new Coord3();
-	float epsilon = 0.05;
+	double epsilon = 0.05;
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
 		inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
 		if(inters != boost::none)
 		{
-			float distance1 = sqrt(pow(inters.get()[0].getX() - coordPoint.getX(), 2)
+			double distance1 = sqrt(pow(inters.get()[0].getX() - coordPoint.getX(), 2)
 					+ pow(inters.get()[0].getY() - coordPoint.getY(), 2)
 					+ pow(inters.get()[0].getZ() - coordPoint.getZ(), 2));
 			if(distance1 > epsilon)
@@ -63,6 +63,20 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 				cout << "Position sans lumiere" << endl;
 				cout << "Objet :" << endl;
 				return false;
+			}
+			if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
+			{
+				double distance2 = sqrt(pow(inters.get()[1].getX() - coordPoint.getX(), 2)
+								+ pow(inters.get()[1].getY() - coordPoint.getY(), 2)
+								+ pow(inters.get()[1].getZ() - coordPoint.getZ(), 2));
+				if(distance2 > epsilon)
+				{
+					cout << "Intersection bloquant la source" << endl;
+					cout << "Objet :" << endl;
+					cout << "Position sans lumiere" << endl;
+					cout << "Objet :" << endl;
+					return false;
+				}
 			}
 		}
 	}
