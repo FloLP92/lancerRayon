@@ -44,7 +44,7 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
 
-	valarray<float> vectDirecteur = Rayon::calculVecteur(coordPoint,light.getPosition());
+	valarray<float> vectDirecteur = Rayon::calculVecteur(light.getPosition(),coordPoint);
 
 	float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
 	vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
@@ -57,31 +57,24 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	{
 		inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
 		int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
-		//std::cout<<" xx : "<<inters.get()[0].getX()<<" yy : "<<inters.get()[0].getY()<<" zz: "<<inters.get()[0].getZ()<<std::endl;
-		cout <<"nbInters: "<<nbInters<< endl;
+
 		if(nbInters==1){
-			return true;
+			Coord3 point1 =  inters.get()[0];
+			if( Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point1,light.getPosition())+1){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else if(nbInters==2)
 		{
-			double d1 = pow(inters.get()[0].getX() - coordPoint.getX(), 2);
-			cout << "me voilaaaaaa "<< endl;
-			double distance1 = sqrt(pow(inters.get()[0].getX() - coordPoint.getX(), 2)
-					+ pow(inters.get()[0].getY() - coordPoint.getY(), 2)
-					+ pow(inters.get()[0].getZ() - coordPoint.getZ(), 2));
-			if(distance1 > epsilon)
-			{
+			Coord3 point1 =  inters.get()[0];
+			Coord3 point2 =  inters.get()[0];
+			if( Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point1,light.getPosition())+epsilon || Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point2,light.getPosition())+epsilon)
+				return true;
+			else{
 				return false;
-			}
-			if(nbInters > 1)
-			{
-				double distance2 = sqrt(pow(inters.get()[1].getX() - coordPoint.getX(), 2)
-								+ pow(inters.get()[1].getY() - coordPoint.getY(), 2)
-								+ pow(inters.get()[1].getZ() - coordPoint.getZ(), 2));
-				if(distance2 > epsilon)
-				{
-					return false;
-				}
 			}
 		}
 	}
@@ -290,7 +283,6 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 	Coord3 point1, point2;
 	float distInters = 0; //distance du point le plus proche
 	float distance1,distance2;
-	cout << "Point A" << endl;
 	for (unsigned int i(0); i < screen.getVerResolution(); ++i)
 		{
 			for(unsigned int j(0); j < screen.getHorResolution(); ++j)
@@ -298,10 +290,6 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
 				{
 					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
-					/*float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
-					vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
-					vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
-					vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;*/
 					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),camera);
 					int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),camera);
 
