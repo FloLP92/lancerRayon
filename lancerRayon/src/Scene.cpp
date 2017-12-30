@@ -283,6 +283,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 	Coord3 point1, point2;
 	float distInters = 0; //distance du point le plus proche
 	float distance1,distance2;
+	
 	for (unsigned int i(0); i < screen.getVerResolution(); ++i)
 		{
 			for(unsigned int j(0); j < screen.getHorResolution(); ++j)
