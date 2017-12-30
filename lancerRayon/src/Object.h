@@ -1,9 +1,10 @@
-/*
- * Object.h
- *
- *  Created on: 29 Dec 2017
- *      Author: Florian
- */
+//============================================================================
+// Name        : Object.h
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Representation basique d'un objet, classe mere abstraite herite par les figures concretes (header)
+//============================================================================//
 
 #ifndef OBJECT_H_
 #define OBJECT_H_
@@ -12,15 +13,16 @@
 
 class Object {
 private :
-	Coord3 center;
-	RGB color;
-	float reflexion;
+	Coord3 center; // Centre de l'objet
+	RGB color; // Couleur de l'objet
+	float reflexion; // Coefficient de reflexion de l'objet
 public:
 	Object();
 	Object(Coord3 chCenter, RGB chColor, float chRef) :
 		center(chCenter),color(chColor),reflexion(chRef){}
 	virtual ~Object();
-
+	virtual void afficher() = 0;
+	//Getters and Setters
 	RGB getColor();
 	Coord3 getCenter();
 	float getReflexion();

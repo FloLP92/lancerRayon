@@ -1,10 +1,10 @@
 //============================================================================
 // Name        : lancerRayon.cpp
-// Author      :
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Programme principale avec le main, active le lancer de rayons et lance les différents tests
+//============================================================================//
 
 #include <iostream>
 #include <stdio.h>
@@ -15,14 +15,12 @@
 using namespace std;
 
 int main() {
-	Light light;
 	Scene scene1;
-
-	scene1.lecture();
+	scene1.lecture(); // Lecture et Parsage du fichier en elements contenus dans notre scene
 	cout << scene1.getCamera() << endl;
 	std::cout<<" x : "<<scene1.getTabSphere()[0].getColor().red<<" y : "<<scene1.getTabSphere()[0].getColor().green<<" z: "<<scene1.getTabSphere()[0].getColor().blue<<std::endl;
-	scene1.imageSansReflexion();
-	scene1.write_image();
+	scene1.imageSansReflexion(); // Calcul de l'image sans reflexion
+	scene1.write_image(); // Ecriture du fichier ppm contenant l'image precedente
 	//Test::testParsing();
 	//Test::testCalculVecteur();
 	//Test::testlectureEtInters();
