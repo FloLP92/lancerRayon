@@ -45,7 +45,7 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	//On calcule le vecteur directeur
 
 	valarray<float> vectDirecteur = Rayon::calculVecteur(light.getPosition(),coordPoint);
-
+	bool b = true;
 	float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
 	vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
 	vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
@@ -60,25 +60,31 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 
 		if(nbInters==1){
 			Coord3 point1 =  inters.get()[0];
-			if( Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point1,light.getPosition())+1){
-				return true;
+			if( Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point1,light.getPosition())+epsilon){
+
 			}
 			else{
 				return false;
+				break;
 			}
 		}
 		else if(nbInters==2)
 		{
 			Coord3 point1 =  inters.get()[0];
-			Coord3 point2 =  inters.get()[0];
-			if( Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point1,light.getPosition())+epsilon || Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point2,light.getPosition())+epsilon)
-				return true;
+			Coord3 point2 =  inters.get()[1];
+			if( Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point1,light.getPosition())+epsilon && Rayon::calculDistance(coordPoint,light.getPosition()) <=  Rayon::calculDistance(point2,light.getPosition())+epsilon){
+
+			}
 			else{
 				return false;
+				break;
 			}
 		}
+		else if(nbInters>2){
+			return false;
+		}
 	}
-	return true;
+	return b;
 }
 bool Scene::eclaireParSource2(Coord3 coordPoint)
 {
@@ -283,7 +289,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 	Coord3 point1, point2;
 	float distInters = 0; //distance du point le plus proche
 	float distance1,distance2;
-	
+
 	for (unsigned int i(0); i < screen.getVerResolution(); ++i)
 		{
 			for(unsigned int j(0); j < screen.getHorResolution(); ++j)
