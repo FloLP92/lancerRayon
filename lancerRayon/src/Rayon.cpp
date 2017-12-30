@@ -112,6 +112,8 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 	return solution;
 }
 
+
+// calcul le cosinus entre la normale d'une sphere et l'angle d'incidence
 float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
 		float scalaire = ((position.getX() - surface.getX()) * (sourceLumineuse.getX() - surface.getX())
 				+ (position.getY() - surface.getY()) * (sourceLumineuse.getY() - surface.getY())
@@ -184,6 +186,8 @@ std::valarray<float> Rayon::calculVecteur(const Coord3 c1, const Coord3 c2)
 	vect[2] = (c2.getZ() - c1.getZ());
 	return vect;
 }
+
+//Calcul du rayon reflechi : on recupere un point sur le rayon qui est reflechi sur la sphere
 Coord3 Rayon::calculRayonReflechi(Coord3 origine,Coord3 ptSurface,Coord3 centreSphere){
 	std::valarray<float> vect = Rayon::calculVecteur(origine,ptSurface);
 	vect = calculVecteurUnitaire(vect);
@@ -199,6 +203,8 @@ Coord3 Rayon::calculRayonReflechi(Coord3 origine,Coord3 ptSurface,Coord3 centreS
 	ptSurface.setZ(ptSurface.getZ()+res[2]);
 	return ptSurface;
 }
+
+//Calcul du vecteur unitaire
 std::valarray<float> Rayon::calculVecteurUnitaire(std::valarray<float> vecteur){
 	std::valarray<float> vectDirecteur = vecteur;
 	float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);

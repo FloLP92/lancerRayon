@@ -343,7 +343,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 			}
 		}
 
-		///PARTIE2
+		///PARTIE2 : reflexion
 		/*for(unsigned int i(0); i < pointsSource.size(); ++i){
 			std::valarray<float> vectDirecteur = Rayon::calculVecteur(pointsSource[i],pointsRayon[i]);
 			for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
@@ -386,22 +386,20 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				if(distInters != 0)//On a eu au moins une intersection
 				{
 					std::valarray<float> vectCameraEcran; //vecteur entre camera et ecran
-					std::valarray<float> vectCameraPoint = Rayon::calculVecteur(camera,pointInters);
-					vectCameraPoint = Rayon::calculVecteurUnitaire(vectCameraPoint);
-					for (unsigned int i(0); i < screen.getVerResolution(); ++i)
+					std::valarray<float> vectCameraPoint = Rayon::calculVecteur(camera,pointInters);//vecteur entre camera et point d'intersection
+					//On cherche quel point de l'ecran il faut changer : on va regarder pour chaque point de lecran si on trouve un vecteur collineaire a celui du vecteur camera->pointintersection
+					for (unsigned int j(0); j < screen.getVerResolution(); ++j)
 					{
-						for(unsigned int j(0); j < screen.getHorResolution(); ++j)
+						for(unsigned int k(0); k < screen.getHorResolution(); ++k)
 						{
-							vectCameraEcran = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
-							vectCameraEcran = Rayon::calculVecteurUnitaire(vectCameraEcran);
-							if(vectCameraPoint[0] == vectCameraEcran[0] && vectCameraPoint[1] == vectCameraEcran[1] && vectCameraPoint[2] == vectCameraEcran[2]){ //On trouve le point sur l'ecran qui sera affecte
-								break;
+							vectCameraEcran = Rayon::calculVecteur(camera,tabPixels[j][k].getCoord3());
+							//On trouve le point sur l'ecran qui sera affecte en verifiant si les vecteurs sont collineaires
+							if(vectCameraPoint[0]/vectCameraEcran[0] == vectCameraPoint[1]/vectCameraEcran[1] && vectCameraPoint[1]/vectCameraEcran[1] == vectCameraPoint[2]/vectCameraEcran[2]){
+								float cos = Rayon::calculCos(objet.getCenter(),pointInters,pointsSource[i]);
+								tabPixels[j][k].setColor(Rayon::calculCouleur2(cos,couleurs[i],light.getColor(),objet.getColor(),objet.getReflexion()));
 							}
 						}
 					}
-					float cos = Rayon::calculCos(objet.getCenter(),pointInters,pointsSource[i]);
-					tabPixels[i][j].setColor(Rayon::calculCouleur(cos,couleurs[i],objet.getColor(),light.getColor()));
-
 				}
 			}//end for*/
 
