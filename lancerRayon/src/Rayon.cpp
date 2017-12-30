@@ -162,9 +162,9 @@ RGB Rayon::calculCouleur2(float cos,RGB couleurRayon,RGB couleurSource,RGB coule
 	red *= (1-coefReflexion);
 	green *= (1-coefReflexion);
 	blue *= (1-coefReflexion);
-	float a = coefReflexion*couleurRayon.red;
-	float b = coefReflexion*couleurRayon.green;
-	float c = coefReflexion*couleurRayon.blue;
+	float a = coefReflexion*couleurRayon.getRed();
+	float b = coefReflexion*couleurRayon.getGreen();
+	float c = coefReflexion*couleurRayon.getBlue();
 	red += a;
 	blue += b;
 	green += c;

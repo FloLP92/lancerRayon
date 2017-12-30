@@ -394,13 +394,16 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 						{
 							vectCameraEcran = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
 							vectCameraEcran = Rayon::calculVecteurUnitaire(vectCameraEcran);
-							if(vectCameraPoint[0] == vectCameraEcran[0] && vectCameraPoint[1] == vectCameraEcran[1] && vectCameraPoint[2] == vectCameraEcran[2]){
+							if(vectCameraPoint[0] == vectCameraEcran[0] && vectCameraPoint[1] == vectCameraEcran[1] && vectCameraPoint[2] == vectCameraEcran[2]){ //On trouve le point sur l'ecran qui sera affecte
 								break;
 							}
 						}
 					}
+					float cos = Rayon::calculCos(objet.getCenter(),pointInters,pointsSource[i]);
+					tabPixels[i][j].setColor(Rayon::calculCouleur(cos,couleurs[i],objet.getColor(),light.getColor()));
+
 				}
-			/*}//end for
+			}//end for*/
 
 
 	screen.setTabPixels(tabPixels);
