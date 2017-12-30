@@ -1,4 +1,3 @@
-#include "Scene.h"
 /*============================================================================
 // Name        : Scene.cpp
 // Author      : DOISNEAU Vincent - LE PALLEC Florian
@@ -6,6 +5,7 @@
 // Copyright   :
 // Description : Implemente la scene avec tous les elements a l interieur
 //============================================================================*/
+#include "Scene.h"
 #include <fstream>
 #include <sstream>
 #include <string>
