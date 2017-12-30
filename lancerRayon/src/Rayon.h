@@ -24,6 +24,7 @@ public:
 	Rayon();
 	virtual ~Rayon();
 	static boost::optional<Coord3*> calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origine);
+	static int nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origine);
 	static float calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse);
 	static RGB calculCouleur(float cos,RGB couleurInter,RGB couleurSource);
 	static std::valarray<float> calculVecteur(const Coord3 c1, const Coord3 c2);

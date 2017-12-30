@@ -68,6 +68,38 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	}
 }
 
+int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
+	//but trouver les coef de lequation de degre 2
+
+	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
+	float b = (-2)*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + (-2)*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + (-2)*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ());
+	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
+	int solution; // On va stocker nos solutions reelles dedans
+	float delta = b*b-4*a*c; //calcul du delta
+
+	if(delta<0){
+
+	}
+	else
+	{
+		if(b == 0){
+			return 1;
+		}
+		if(b>0){
+			return 2;
+			float s1 = (b-sqrt(delta))/(2*a);
+			float s2 = (b+sqrt(delta))/(2*a);
+			if(s1>0){
+				solution++;
+			}
+			if(s2>0){
+				solution++;
+			}
+		}
+	}
+	return 0;
+}
+
 
 float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
 		float scalaire = ((position.getX() - surface.getX()) * (sourceLumineuse.getX() - surface.getX())
@@ -82,7 +114,9 @@ float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
 				+ pow(sourceLumineuse.getY() - surface.getY(), 2)
 				+ pow(sourceLumineuse.getZ() - surface.getZ(), 2));
 
-	return scalaire/(normeN * normeR);
+	float cosinus = 	scalaire/(normeN * normeR);
+	cosinus = sqrt(cosinus*cosinus);
+	return cosinus;
 }
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
@@ -90,9 +124,9 @@ RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	red = (couleurInter.red*couleurSource.red)/255;
 	green = (couleurInter.green*couleurSource.green)/255;
 	blue = (couleurInter.blue*couleurSource.blue)/255;
-	//red *= cos;
-	//green *= cos;
-	//blue *= cos;
+	red *= cos;
+	green *= cos;
+	blue *= cos;
 
 	couleurFinale.red = (int) red;
 	couleurFinale.green = (int) green;

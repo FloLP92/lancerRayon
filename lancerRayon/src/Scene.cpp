@@ -42,24 +42,34 @@ void Scene::setCamera(Coord3 c){
 //renvoit boolean indiquant si point eclaire par source lumineuse
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
+	std::cout<<" x : "<<coordPoint.getX()<<" y : "<<coordPoint.getY()<<" z: "<<coordPoint.getZ()<<std::endl;
 	//On calcule le vecteur directeur
 	valarray<float> vectDirecteur = Rayon::calculVecteur(coordPoint,light.getPosition());
+	float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
+	vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
+	vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
+	vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
 	boost::optional<Coord3*> inters = new Coord3();
 	double epsilon = 0.05;
 
 	for(Sphere sphere : tabSphere) //On teste pour chaque objet s ils bloquent la lumiere
 	{
 		inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
+		int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
 		if(inters != boost::none)
 		{
+			if(nbInters > 0){
+				std::cout<<"heello"<<std::endl;
+			}
 			double distance1 = sqrt(pow(inters.get()[0].getX() - coordPoint.getX(), 2)
 					+ pow(inters.get()[0].getY() - coordPoint.getY(), 2)
 					+ pow(inters.get()[0].getZ() - coordPoint.getZ(), 2));
 			if(distance1 > epsilon)
 			{
+
 				return false;
 			}
-			if(sizeof(inters.get()) / sizeof(Coord3*) > 1) //On doit prendre le plus proche
+			if(inters.get()[1].getX() != NULL) //On doit prendre le plus proche
 			{
 				double distance2 = sqrt(pow(inters.get()[1].getX() - coordPoint.getX(), 2)
 								+ pow(inters.get()[1].getY() - coordPoint.getY(), 2)
@@ -220,8 +230,8 @@ void Scene::lecture(){
 						dF = std::stof(dP,&sz);//radius
 						colorSphere.red = std::stoi(eP,&sz);//red
 						colorSphere.green = std::stoi(fP,&sz);//green
-						colorSphere.blue = std::stoi(eP,&sz);//blue
-						hF = std::stof(fP,&sz);//reflex
+						colorSphere.blue = std::stoi(gP,&sz);//blue
+						hF = std::stof(hP,&sz);//reflex
 
 						coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
 						Sphere sphere1 = Sphere(dF,coordSphere,hF,colorSphere);
@@ -313,29 +323,18 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				}
 				if(distInters != 0)//On a eu au moins une intersection
 				{
+					//if(Scene::eclaireParSource(pointInters))
+					//{
 
-					for(Sphere sphere : tabSphere){ // on rattache le point d'intersection a sa sphere
-						//std::cout<< Rayon::calculDistance(pointInters,sphere.getCenter()) <<std::endl;
-						if(Rayon::calculDistance(pointInters,sphere.getCenter()) - sphere.getRadius() == 0){
-							objet = sphere;
-						}
-					}
 
-					if(Scene::eclaireParSource(pointInters))
-					{
-
-						vectDirecteur = Rayon::calculVecteur(this->light.getPosition(),pointInters);
-						float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
-						vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
-						vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
-						vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
 						float cos = Rayon::calculCos(objet.getCenter(),pointInters,light.getPosition());
-						std::cout<<" xx: "<<cos<<std::endl;
-						std::cout<<" x : "<<light.getColor().red<<" y : "<<light.getColor().green<<" z: "<<light.getColor().blue<<std::endl;
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
-					}
-					else //Pas dans la lumiere, on laisse couleur du fond
-						tabPixels[i][j].setColor(screen.getColor());
+					//}
+					//else{ //Pas dans la lumiere, on laisse couleur du fond
+					//	RGB coloration;
+					//	coloration.red=0;coloration.green=0;coloration.blue=0;
+					//	tabPixels[i][j].setColor(coloration);
+					//}
 				}
 				distInters = 0;
 			}
