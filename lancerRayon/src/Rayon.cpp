@@ -3,7 +3,7 @@
 // Author      : DOISNEAU Vincent - LE PALLEC Florian
 // Version     : 1 (31 Janvier 2017)
 // Copyright   :
-// Description : Classe implémentant des methodes statiques de calcul utilises par les autres classes
+// Description : Classe implï¿½mentant des methodes statiques de calcul utilises par les autres classes
 //============================================================================*/
 
 #include "Rayon.h"
@@ -129,6 +129,8 @@ float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
 	cosinus = sqrt(cosinus*cosinus);
 	return cosinus;
 }
+
+//Calcul de la couleur sans reflexion
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
 	float red,green,blue;
@@ -139,6 +141,33 @@ RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	green *= cos;
 	blue *= cos;
 
+	couleurFinale.setRed((int) red);
+	couleurFinale.setGreen((int) green);
+	couleurFinale.setBlue((int) blue);
+
+
+	return couleurFinale;
+}
+
+//Calcul de la couleur avec Reflexion
+RGB Rayon::calculCouleur2(float cos,RGB couleurRayon,RGB couleurSource,RGB couleurInter,float coefReflexion){
+	RGB couleurFinale;
+	float red,green,blue;
+	red = (couleurInter.getRed()*couleurSource.getRed())/255;
+	green = (couleurInter.getGreen()*couleurSource.getGreen())/255;
+	blue = (couleurInter.getBlue()*couleurSource.getBlue())/255;
+	red *= cos;
+	green *= cos;
+	blue *= cos;
+	red *= (1-coefReflexion);
+	green *= (1-coefReflexion);
+	blue *= (1-coefReflexion);
+	float a = coefReflexion*couleurRayon.red;
+	float b = coefReflexion*couleurRayon.green;
+	float c = coefReflexion*couleurRayon.blue;
+	red += a;
+	blue += b;
+	green += c;
 	couleurFinale.setRed((int) red);
 	couleurFinale.setGreen((int) green);
 	couleurFinale.setBlue((int) blue);
@@ -163,7 +192,7 @@ Coord3 Rayon::calculRayonReflechi(Coord3 origine,Coord3 ptSurface,Coord3 centreS
 	std::valarray<float> vect2 = Rayon::calculVecteur(centreSphere,ptSurface);
 	vect2 = calculVecteurUnitaire(vect2);
 
-	std::valarray<float> res = vect - vect2*( sqrt(vect[0]*vect[1]*vect[2] * sqrt(vect2[0]*vect2[1]*vect2[2] * Rayon::calculCos(centreSphere,ptSurface,origine) )))*2;
+	std::valarray<float> res = vect - vect2*( sqrt(vect[0]*vect[0]+vect[1]*vect[1]+vect[2]*vect[2]) * sqrt(vect2[0]*vect2[0]+vect2[1]*vect2[1]+vect2[2]*vect2[2]) * Rayon::calculCos(centreSphere,ptSurface,origine) )*2;
 
 	ptSurface.setX(ptSurface.getX()+res[0]);
 	ptSurface.setY(ptSurface.getY()+res[1]);

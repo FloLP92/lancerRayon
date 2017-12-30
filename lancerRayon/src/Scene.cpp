@@ -270,6 +270,11 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 	float distInters = 0; //distance du point le plus proche
 	float distance1,distance2;
 
+	//partie 2 :
+	vector<Coord3> pointsSource;// points a partir desquels partent la reflexion
+	vector<Coord3> pointsRayon; // point sur le trajet de la reflexion
+	vector<RGB> couleurs;// couleur de la source du rayon (premier rebond rayon)
+
 	for (unsigned int i(0); i < screen.getVerResolution(); ++i)
 		{
 			for(unsigned int j(0); j < screen.getHorResolution(); ++j)
@@ -312,17 +317,23 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 							objet = sphere;
 						}
 					}
-				}
+				} //End for sphere
 				if(distInters != 0)//On a eu au moins une intersection
 				{
 
-					//std::cout<<"heellofesfs"<<std::endl;
 					if(Scene::eclaireParSource(pointInters))
 					{
 						float cos = Rayon::calculCos(objet.getCenter(),pointInters,light.getPosition());
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
+
+						//On garde les elements pour ensuite calculer plus tard la deuxieme reflexion
+						pointsSource.push_back(pointInters);
+						Coord3 ptRayon = Rayon::calculRayonReflechi(light.getPosition(),pointInters,objet.getCenter());
+						pointsRayon.push_back(ptRayon);
+						couleurs.push_back(objet.getColor());
+
 					}
-					else{ //Pas dans la lumiere, on laisse couleur du fond
+					else{ //Pas dans la lumiere, on met la couleur noire
 						RGB coloration;
 						coloration.setRed(0);coloration.setGreen(0);coloration.setBlue(0);
 						tabPixels[i][j].setColor(coloration);
@@ -331,6 +342,67 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				distInters = 0;
 			}
 		}
+
+		///PARTIE2
+		/*for(unsigned int i(0); i < pointsSource.size(); ++i){
+			std::valarray<float> vectDirecteur = Rayon::calculVecteur(pointsSource[i],pointsRayon[i]);
+			for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
+			{
+					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),pointsSource[i]);
+					int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),pointsSource[i]);
+					if(nbInters>0)//On a au moins un point d intersections
+					{
+						if(nbInters==2) //On doit prendre le plus proche
+						{
+
+							point1 = inters.get()[0];
+							point2 = inters.get()[1];
+							distance1 = Rayon::calculDistance(pointsSource[i],point1);
+							distance2 = Rayon::calculDistance(pointsSource[i],point2);
+							if(distance1 < distance2)
+							{
+								distInters = distance1;
+								pointInters = point1;
+								objet = sphere;
+							}
+							else
+							{
+								distInters = distance2;
+								pointInters = point2;
+								objet = sphere;
+							}
+
+						}
+						else // 1 seul point, pas de choix possible
+						{
+							point1 = inters.get()[0];
+							distance1 = Rayon::calculDistance(pointsSource[i],point1);
+							distInters = distance1;
+							pointInters = point1;
+							objet = sphere;
+						}
+					}
+				}// End for sphere
+				if(distInters != 0)//On a eu au moins une intersection
+				{
+					std::valarray<float> vectCameraEcran; //vecteur entre camera et ecran
+					std::valarray<float> vectCameraPoint = Rayon::calculVecteur(camera,pointInters);
+					vectCameraPoint = Rayon::calculVecteurUnitaire(vectCameraPoint);
+					for (unsigned int i(0); i < screen.getVerResolution(); ++i)
+					{
+						for(unsigned int j(0); j < screen.getHorResolution(); ++j)
+						{
+							vectCameraEcran = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
+							vectCameraEcran = Rayon::calculVecteurUnitaire(vectCameraEcran);
+							if(vectCameraPoint[0] == vectCameraEcran[0] && vectCameraPoint[1] == vectCameraEcran[1] && vectCameraPoint[2] == vectCameraEcran[2]){
+								break;
+							}
+						}
+					}
+				}
+			/*}//end for
+
+
 	screen.setTabPixels(tabPixels);
 }
 //exporte les pixels et le reste des informations dans un fichier ppm
