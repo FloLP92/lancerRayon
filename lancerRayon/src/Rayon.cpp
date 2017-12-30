@@ -23,9 +23,12 @@ Rayon::~Rayon() {
 
 boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
 	//but trouver les coef de lequation de degre 2
+	//std::cout<<" x : "<<origineRayon.getX()<<" y : "<<origineRayon.getY()<<" z: "<<origineRayon.getZ()<<std::endl;
+	//std::cout<<" xx : "<<ptSphere.getX()<<" yy : "<<ptSphere.getY()<<" zz: "<<ptSphere.getZ()<<std::endl;
+	//std::cout<<" xxx : "<<vectDirecteur[0]<<" yyy : "<<vectDirecteur[1]<<" zzz: "<<vectDirecteur[2]<<std::endl;
 
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
-	float b = (-2)*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + (-2)*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + (-2)*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ());
+	float b = 2 * ( vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ()) );
 	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
 	std::vector<float> solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
@@ -35,18 +38,17 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	}
 	else
 	{
-		if(b == 0){
-		float s = -b/(2*a);
-		if(s>0)
-			solution.push_back(s);
+		std::cout<<"heelo a:"<<a<<"b:"<<b<<"c:"<<c<<"delta :"<<delta<<std::endl;
+		if(delta == 0){
+			float s = -b/(2*a);
+			if(s>0)
+				solution.push_back(s);
 		}
-		if(b>0){
-			//std::cout<<"heelo a : "<<a<<" b : "<<b<<" c: "<<c<<" delta : "<<delta<<std::endl;
-			float s1 = (b-sqrt(delta))/(2*a);
-			float s2 = (b+sqrt(delta))/(2*a);
-			//std::cout<<" s1 : "<<s1<<" s2 : "<<s2<<std::endl;
+		if(delta>0){
+			float s1 = (-b-sqrt(delta))/(2*a);
+			float s2 = (-b+sqrt(delta))/(2*a);
 			if(s1>0){
-				//std::cout<<"heelo"<<std::endl;
+
 				solution.push_back(s1);
 			}
 			if(s2>0){
@@ -72,7 +74,7 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 	//but trouver les coef de lequation de degre 2
 
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
-	float b = (-2)*vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + (-2)*vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + (-2)*vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ());
+	float b = 2 * ( vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ()) );
 	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
 	int solution; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
@@ -82,19 +84,11 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 	}
 	else
 	{
-		if(b == 0){
+		if(delta == 0){
 			return 1;
 		}
-		if(b>0){
+		if(delta>0){
 			return 2;
-			float s1 = (b-sqrt(delta))/(2*a);
-			float s2 = (b+sqrt(delta))/(2*a);
-			if(s1>0){
-				solution++;
-			}
-			if(s2>0){
-				solution++;
-			}
 		}
 	}
 	return 0;

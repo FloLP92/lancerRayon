@@ -56,6 +56,7 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	{
 		inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
 		int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
+		std::cout<<" xx : "<<inters.get()[0].getX()<<" yy : "<<inters.get()[0].getY()<<" zz: "<<inters.get()[0].getZ()<<std::endl;
 		if(inters != boost::none)
 		{
 			if(nbInters > 0){
@@ -268,29 +269,16 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				for(Sphere sphere : tabSphere)//On va chercher intersection la plus proche
 				{
 					vectDirecteur = Rayon::calculVecteur(camera,tabPixels[i][j].getCoord3());
-					float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
+					/*float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
 					vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
 					vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
-					vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
-					//std::cout<<" x : "<<vectDirecteur[0]<<" y : "<<vectDirecteur[1]<<" z: "<<vectDirecteur[2]<<std::endl;
-					//std::cout<<" xx : "<<sphere.getCenter().getX()<<" yy : "<<sphere.getCenter().getY()<<" zz: "<<sphere.getCenter().getZ()<<std::endl;
-					//std::cout<<" xxx : "<<camera.getX()<<" yyy : "<<camera.getY()<<" zzz: "<<camera.getZ()<<std::endl;
+					vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;*/
 					inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),camera);
+					int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),camera);
 
-					if(inters != boost::none)//On a au moins un point d intersections
+					if(nbInters>0)//On a au moins un point d intersections
 					{
-						//std::cout<<" x : "<<inters.get()[0].getX()<<" y : "<<inters.get()[0].getY()<<" z: "<<inters.get()[0].getZ()<<std::endl;
-						//std::cout<<" x : "<<inters.get()[1].getX()<<" y : "<<inters.get()[1].getY()<<" z: "<<inters.get()[1].getZ()<<std::endl;
-
-						/*if(distInters == 0)//Pas d intersection, on le met direct
-						{
-							point1 = inters.get()[0];
-							distance1 = Rayon::calculDistance(camera,point1);
-							distInters = distance1;
-							pointInters = point1;
-							objet = sphere;
-						}*/
-						if(inters.get()[1].getX() != NULL) //On doit prendre le plus proche
+						if(nbInters==2) //On doit prendre le plus proche
 						{
 
 							point1 = inters.get()[0];
@@ -313,7 +301,6 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 						else // 1 seul point, pas de choix possible
 						{
 							point1 = inters.get()[0];
-
 							distance1 = Rayon::calculDistance(camera,point1);
 							distInters = distance1;
 							pointInters = point1;
@@ -323,18 +310,19 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				}
 				if(distInters != 0)//On a eu au moins une intersection
 				{
+					std::cout<<"heellofesfs"<<std::endl;
 					//if(Scene::eclaireParSource(pointInters))
 					//{
 
 
 						float cos = Rayon::calculCos(objet.getCenter(),pointInters,light.getPosition());
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
-					//}
-					//else{ //Pas dans la lumiere, on laisse couleur du fond
-					//	RGB coloration;
-					//	coloration.red=0;coloration.green=0;coloration.blue=0;
-					//	tabPixels[i][j].setColor(coloration);
-					//}
+					/*}
+					else{ //Pas dans la lumiere, on laisse couleur du fond
+						RGB coloration;
+						coloration.red=0;coloration.green=0;coloration.blue=0;
+						tabPixels[i][j].setColor(coloration);
+					}*/
 				}
 				distInters = 0;
 			}
