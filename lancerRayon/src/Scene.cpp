@@ -15,34 +15,10 @@
 #include "Light.h"
 #include "Rayon.h"
 #include <cmath>
-
 using namespace std;
 
-Scene::~Scene() {
-}
-//Getters and Setters
-Screen Scene::getScreen(){
-	return screen;
-}
-void Scene::setScreen(Screen chScreen){
-	screen = chScreen;
-}
-Light Scene::getLight(){
-	return light;
-}
-void Scene::setLight(Light chLight){
-	light = chLight;
-}
-vector<Sphere> Scene::getTabSphere(){
-	return tabSphere;
-}
-Coord3 Scene::getCamera(){
-	return camera;
-}
-void Scene::setCamera(Coord3 c){
-	camera = c;
-}
-//renvoit boolean indiquant si point eclaire par source lumineuse
+Scene::~Scene() {}
+//renvoie bool selon si coordPoint eclaire par la source (methode 1)
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
 	//On calcule le vecteur directeur
@@ -89,6 +65,7 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	}
 	return b;
 }
+//renvoie bool selon si coordPoint eclaire par la source (methode 2)
 bool Scene::eclaireParSource2(Coord3 coordPoint)
 {
 	valarray<float> vectDirecteur = Rayon::calculVecteur(coordPoint,light.getPosition());
@@ -114,8 +91,7 @@ bool Scene::eclaireParSource2(Coord3 coordPoint)
 	}while(distance>Rayon::calculDistance(coordEnCours,light.getPosition()));
 	return true;
 }
-
-
+//lit et parse un fichier texte
 void Scene::lecture(){
 	std::ifstream infile("aParser.txt");
 
@@ -282,6 +258,7 @@ void Scene::lecture(){
 	screen.calculResVer();
 	screen.creationPixels();
 }
+//calcul d'une image apres lancer de rayons sans reflexion
 void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 {
 	vector<vector<Pixel>> tabPixels = screen.getTabPixels();
@@ -356,6 +333,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 		}
 	screen.setTabPixels(tabPixels);
 }
+//exporte les pixels et le reste des informations dans un fichier ppm
 void Scene::write_image(){ //Creation du fichier ppm
 	std::ofstream outfile;
 	outfile.open("new.ppm");
@@ -374,4 +352,27 @@ void Scene::write_image(){ //Creation du fichier ppm
 		outfile<<"\n";
 	}
 	outfile.close();
+}
+
+//Getters and Setters
+Screen Scene::getScreen(){
+	return screen;
+}
+void Scene::setScreen(Screen chScreen){
+	screen = chScreen;
+}
+Light Scene::getLight(){
+	return light;
+}
+void Scene::setLight(Light chLight){
+	light = chLight;
+}
+vector<Sphere> Scene::getTabSphere(){
+	return tabSphere;
+}
+Coord3 Scene::getCamera(){
+	return camera;
+}
+void Scene::setCamera(Coord3 c){
+	camera = c;
 }

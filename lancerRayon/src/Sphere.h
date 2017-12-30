@@ -3,7 +3,7 @@
 // Author      : DOISNEAU Vincent - LE PALLEC Florian
 // Version     : 1 (31 Janvier 2017)
 // Copyright   :
-// Description : Objet de type sphere (header)
+// Description : Objet de type sphere qui herite de Object (header)
 //============================================================================
 
 #ifndef SPHERE_H_

@@ -1,17 +1,16 @@
-/*
- * Screen.h
- *
- *  Created on: Nov 29, 2017
- *      Author: florian.le-pallec
- */
-
+//============================================================================
+// Name        : Screen.h
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Ecran de quatre bords avec un ensemble de pixels (header)
+//============================================================================
 #ifndef SCREEN_H_
 #define SCREEN_H_
 #include <vector>
 #include "Coord3.h"
 #include "Pixel.h"
 #include "RGB.h"
-
 
 class Screen {
 private:
@@ -31,7 +30,7 @@ public:
 	void calculBrCorner();
 	void calculResVer();
 	void creationPixels();
-
+	//Getters and Setters
 	RGB getColor();
 	Coord3 getTrCorner();
 	Coord3 getBlCorner();
@@ -40,7 +39,6 @@ public:
 	unsigned int getHorResolution();
 	unsigned int getVerResolution();
 	std::vector<std::vector<Pixel>> getTabPixels();
-
 	void setColor(RGB c);
 	void setTrCorner(const Coord3& c);
 	void setBlCorner(const Coord3& c);
