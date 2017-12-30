@@ -8,14 +8,8 @@
 
 #include "Coord3.h"
 
-Coord3::Coord3() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Coord3::~Coord3() {
-	// TODO Auto-generated destructor stub
-}
+Coord3::Coord3() {}
+Coord3::~Coord3() {}
 
 //On cherche le point parallele a c1 par rapport a middle
 Coord3 Coord3::paralleleCoord3(const Coord3 c1, const Coord3 middle)
