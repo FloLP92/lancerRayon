@@ -1,9 +1,10 @@
-/*
- * Rayon.cpp
- *
- *  Created on: Dec 6, 2017
- *      Author: vincent.doisneau
- */
+/*============================================================================
+// Name        : Rayon.cpp
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Classe implémentant des methodes statiques de calcul utilises par les autres classes
+//============================================================================*/
 
 #include "Rayon.h"
 #include <math.h>
@@ -11,17 +12,14 @@
 #include "Sphere.h"
 #include <valarray>
 
-
 Rayon::Rayon() {
-	// TODO Auto-generated constructor stub
-
 }
-
 Rayon::~Rayon() {
-	// TODO Auto-generated destructor stub
 }
 
-boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
+//Determine des possibles points d'intersections entre un point origineRayon et une sphere en suivant un vecteur directeur
+//Si pas de points, renvoie boost::none
+boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){
 	//but trouver les coef de lequation de degre 2
 	//std::cout<<" x : "<<origineRayon.getX()<<" y : "<<origineRayon.getY()<<" z: "<<origineRayon.getZ()<<std::endl;
 	//std::cout<<" xx : "<<ptSphere.getX()<<" yy : "<<ptSphere.getY()<<" zz: "<<ptSphere.getZ()<<std::endl;
@@ -79,7 +77,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 		return coordonnees;
 	}
 }
-
+//Renvoie le nombre de points d'intersections entre un point origineRayon et une sphere en suivant un vecteur directeur
 int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){ // On suppose que l'origine du rayon est le vecteur (0,0,0)
 	//but trouver les coef de lequation de degre 2
 
@@ -113,9 +111,6 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 	}
 	return solution;
 }
-
-
-
 
 float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
 		float scalaire = ((position.getX() - surface.getX()) * (sourceLumineuse.getX() - surface.getX())
@@ -151,6 +146,7 @@ RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 
 	return couleurFinale;
 }
+//Renvoie le vecteur directeur entre les point c1 et c2
 std::valarray<float> Rayon::calculVecteur(const Coord3 c1, const Coord3 c2)
 {
 	std::valarray<float> vect(3);
@@ -159,7 +155,6 @@ std::valarray<float> Rayon::calculVecteur(const Coord3 c1, const Coord3 c2)
 	vect[2] = (c2.getZ() - c1.getZ());
 	return vect;
 }
-
 Coord3 Rayon::calculRayonReflechi(Coord3 origine,Coord3 ptSurface,Coord3 centreSphere){
 	std::valarray<float> vect = Rayon::calculVecteur(origine,ptSurface);
 	vect = calculVecteurUnitaire(vect);
@@ -183,7 +178,7 @@ std::valarray<float> Rayon::calculVecteurUnitaire(std::valarray<float> vecteur){
 	vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
 	return vectDirecteur;
 }
-
+//Renvoie la distance entre les points c1 et c2
 float Rayon::calculDistance(Coord3 c1, Coord3 c2){
 	float dist = sqrt(pow(c1.getX() - c2.getX(), 2)
 			+ pow(c1.getY() - c2.getY(), 2)

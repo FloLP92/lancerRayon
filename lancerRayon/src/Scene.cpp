@@ -1,4 +1,11 @@
 #include "Scene.h"
+/*============================================================================
+// Name        : Scene.cpp
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Implemente la scene avec tous les elements a l interieur
+//============================================================================*/
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -12,9 +19,8 @@
 using namespace std;
 
 Scene::~Scene() {
-	// TODO Auto-generated destructor stub
 }
-
+//Getters and Setters
 Screen Scene::getScreen(){
 	return screen;
 }
@@ -27,18 +33,15 @@ Light Scene::getLight(){
 void Scene::setLight(Light chLight){
 	light = chLight;
 }
-
 vector<Sphere> Scene::getTabSphere(){
 	return tabSphere;
 }
-
 Coord3 Scene::getCamera(){
 	return camera;
 }
 void Scene::setCamera(Coord3 c){
 	camera = c;
 }
-
 //renvoit boolean indiquant si point eclaire par source lumineuse
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
