@@ -1,20 +1,18 @@
-/*
- * Object.cpp
- *
- *  Created on: 29 Dec 2017
- *      Author: Florian
- */
+//============================================================================
+// Name        : Object.h
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Representation basique d'un objet, classe mere abstraite herite par les figures concretes
+//============================================================================//
 
 #include "Object.h"
 
 Object::Object() {
-	// TODO Auto-generated constructor stub
 }
-
 Object::~Object() {
-	// TODO Auto-generated destructor stub
 }
-
+//Getter and Setters
 RGB Object::getColor(){
 	return color;
 }
