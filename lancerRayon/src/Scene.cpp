@@ -42,13 +42,13 @@ void Scene::setCamera(Coord3 c){
 //renvoit boolean indiquant si point eclaire par source lumineuse
 bool Scene::eclaireParSource(Coord3 coordPoint)
 {
-	std::cout<<" x : "<<coordPoint.getX()<<" y : "<<coordPoint.getY()<<" z: "<<coordPoint.getZ()<<std::endl;
 	//On calcule le vecteur directeur
 	valarray<float> vectDirecteur = Rayon::calculVecteur(coordPoint,light.getPosition());
+	/*
 	float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
 	vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
 	vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
-	vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
+	vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;*/
 	boost::optional<Coord3*> inters = new Coord3();
 	double epsilon = 0.05;
 
@@ -56,21 +56,20 @@ bool Scene::eclaireParSource(Coord3 coordPoint)
 	{
 		inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
 		int nbInters = Rayon::nbPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),light.getPosition());
-		std::cout<<" xx : "<<inters.get()[0].getX()<<" yy : "<<inters.get()[0].getY()<<" zz: "<<inters.get()[0].getZ()<<std::endl;
+		//std::cout<<" xx : "<<inters.get()[0].getX()<<" yy : "<<inters.get()[0].getY()<<" zz: "<<inters.get()[0].getZ()<<std::endl;
+
 		if(inters != boost::none)
 		{
-			if(nbInters > 0){
-				std::cout<<"heello"<<std::endl;
-			}
+			double d1 = pow(inters.get()[0].getX() - coordPoint.getX(), 2);
+			cout << "me voila "<< endl;
 			double distance1 = sqrt(pow(inters.get()[0].getX() - coordPoint.getX(), 2)
 					+ pow(inters.get()[0].getY() - coordPoint.getY(), 2)
 					+ pow(inters.get()[0].getZ() - coordPoint.getZ(), 2));
 			if(distance1 > epsilon)
 			{
-
 				return false;
 			}
-			if(inters.get()[1].getX() != NULL) //On doit prendre le plus proche
+			if(nbInters > 1)
 			{
 				double distance2 = sqrt(pow(inters.get()[1].getX() - coordPoint.getX(), 2)
 								+ pow(inters.get()[1].getY() - coordPoint.getY(), 2)
@@ -310,19 +309,17 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 				}
 				if(distInters != 0)//On a eu au moins une intersection
 				{
-					std::cout<<"heellofesfs"<<std::endl;
-					//if(Scene::eclaireParSource(pointInters))
-					//{
-
-
+					//std::cout<<"heellofesfs"<<std::endl;
+					if(Scene::eclaireParSource(pointInters))
+					{
 						float cos = Rayon::calculCos(objet.getCenter(),pointInters,light.getPosition());
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
-					/*}
+					}
 					else{ //Pas dans la lumiere, on laisse couleur du fond
 						RGB coloration;
 						coloration.red=0;coloration.green=0;coloration.blue=0;
-						tabPixels[i][j].setColor(coloration);
-					}*/
+						tabPixels[i][j].setColor(this->screen.getColor());
+					}
 				}
 				distInters = 0;
 			}

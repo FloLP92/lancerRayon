@@ -38,7 +38,7 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	}
 	else
 	{
-		std::cout<<"heelo a:"<<a<<"b:"<<b<<"c:"<<c<<"delta :"<<delta<<std::endl;
+		//std::cout<<"heelo a:"<<a<<"b:"<<b<<"c:"<<c<<"delta :"<<delta<<std::endl;
 		if(delta == 0){
 			float s = -b/(2*a);
 			if(s>0)
@@ -48,11 +48,18 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 			float s1 = (-b-sqrt(delta))/(2*a);
 			float s2 = (-b+sqrt(delta))/(2*a);
 			if(s1>0){
-
 				solution.push_back(s1);
+				if(s2>0){
+					solution.push_back(s2);
+				}
 			}
-			if(s2>0){
-				solution.push_back(s2);
+			else
+			{
+				if(s2>0){
+					solution.push_back(s2);
+				}
+				else
+					return boost::none;
 			}
 		}
 		//coordonnees du (des) point(s) trouves

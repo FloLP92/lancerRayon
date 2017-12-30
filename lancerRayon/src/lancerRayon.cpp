@@ -19,6 +19,7 @@ int main() {
 	Scene scene1;
 
 	scene1.lecture();
+	cout << scene1.getCamera() << endl;
 	std::cout<<" x : "<<scene1.getTabSphere()[0].getColor().red<<" y : "<<scene1.getTabSphere()[0].getColor().green<<" z: "<<scene1.getTabSphere()[0].getColor().blue<<std::endl;
 	scene1.imageSansReflexion();
 	scene1.write_image();
