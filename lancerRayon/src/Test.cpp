@@ -1,23 +1,26 @@
+//============================================================================
+// Name        : Test.cpp
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Tests des differentes fonctions
+//============================================================================
 #include <iostream>
 #include <vector>
 #include <math.h>
 #include <assert.h>
 #include "Test.h"
 #include "Rayon.h"
+#include "RGB.h"
 #include "Scene.h"
-#include "Struct.h"
 using namespace std;
+
 Test::Test()
-{
-
-}
-
+{}
 Test::~Test()
-{
-
-}
-
-void Test::test1(){
+{}
+//Tests d'intersections previsibles dont l'on peut s'assurer du resultat
+void Test::testIntersection(){
 	Coord3 sphere1(4,0,0);
 	valarray<float> vect1;
 	vect1[0] = 1;vect1[1] = 0; vect1[2] = 0;
@@ -30,7 +33,6 @@ void Test::test1(){
 	for(unsigned int i(0);i< sizeof(test)/sizeof(*test);i++){
 		//cout << test.get()[i] << endl;
 	}
-
 	Coord3 sphere2(0,4,0);
 	valarray<float> vect2;
 	vect2[0] = 0;vect2[1] = 1;vect2[2] = 0;
@@ -42,10 +44,9 @@ void Test::test1(){
 	for(unsigned int i(0);i< sizeof(test2)/sizeof(*test2);i++){
 		//cout << test2.get()[i] << endl;
 	}
-
 }
-void Test::testCalculVecteur()
-{
+//Tests du calcul de vecteur directeur entre 2 points
+void Test::testCalculVecteur(){
 	Coord3 a(2,5,1);
 	Coord3 b(9,2,10);
 	valarray<float> vect = Rayon::calculVecteur(a,b);
@@ -53,6 +54,7 @@ void Test::testCalculVecteur()
 	assert(vect[1] == -3);
 	assert(vect[2] == 9);
 }
+//Test de la lecture du fichier, son parsage et une intersection prise au hasard
 void Test::testlectureEtInters()
 {
 	Scene scene;
@@ -65,6 +67,7 @@ void Test::testlectureEtInters()
 	cout << "sphere " << sphere << endl;
 	boost::optional<Coord3*> inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),origine);
 }
+//Test de la lecture du fichier, son parsage et verification de ce que l'on a parser
 void Test::testParsing(){
 	Scene scene;
 	scene.lecture();

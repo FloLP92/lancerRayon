@@ -9,12 +9,12 @@
 #ifndef RAYON_H_
 #define RAYON_H_
 #include "Sphere.h"
-#include "Struct.h"
 #include <vector>
 #include <valarray>
 #include <iostream>
 #include <boost/optional.hpp>
 #include "Coord3.h"
+#include "RGB.h"
 
 class Rayon {
 private:

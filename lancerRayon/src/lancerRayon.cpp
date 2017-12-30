@@ -9,7 +9,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Struct.h"
+
+#include "RGB.h"
 #include "Test.h"
 #include "Scene.h"
 using namespace std;
@@ -17,8 +18,6 @@ using namespace std;
 int main() {
 	Scene scene1;
 	scene1.lecture(); // Lecture et Parsage du fichier en elements contenus dans notre scene
-	cout << scene1.getCamera() << endl;
-	std::cout<<" x : "<<scene1.getTabSphere()[0].getColor().red<<" y : "<<scene1.getTabSphere()[0].getColor().green<<" z: "<<scene1.getTabSphere()[0].getColor().blue<<std::endl;
 	scene1.imageSansReflexion(); // Calcul de l'image sans reflexion
 	scene1.write_image(); // Ecriture du fichier ppm contenant l'image precedente
 	//Test::testParsing();

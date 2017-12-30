@@ -8,8 +8,8 @@
 
 #ifndef PIXEL_H_
 #define PIXEL_H_
-#include "Struct.h"
 #include "Coord3.h"
+#include "RGB.h"
 
 class Pixel {
 private :

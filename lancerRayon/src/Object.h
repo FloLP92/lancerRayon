@@ -8,11 +8,11 @@
 
 #ifndef OBJECT_H_
 #define OBJECT_H_
-#include "Struct.h"
 #include "Coord3.h"
+#include "RGB.h"
 
 class Object {
-private :
+protected :
 	Coord3 center; // Centre de l'objet
 	RGB color; // Couleur de l'objet
 	float reflexion; // Coefficient de reflexion de l'objet

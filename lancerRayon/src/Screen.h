@@ -8,9 +8,9 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 #include <vector>
-#include "Struct.h"
 #include "Coord3.h"
 #include "Pixel.h"
+#include "RGB.h"
 
 
 class Screen {

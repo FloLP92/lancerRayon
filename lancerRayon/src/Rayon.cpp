@@ -132,16 +132,16 @@ float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
 RGB Rayon::calculCouleur(float cos,RGB couleurInter,RGB couleurSource){
 	RGB couleurFinale;
 	float red,green,blue;
-	red = (couleurInter.red*couleurSource.red)/255;
-	green = (couleurInter.green*couleurSource.green)/255;
-	blue = (couleurInter.blue*couleurSource.blue)/255;
+	red = (couleurInter.getRed()*couleurSource.getRed())/255;
+	green = (couleurInter.getGreen()*couleurSource.getGreen())/255;
+	blue = (couleurInter.getBlue()*couleurSource.getBlue())/255;
 	red *= cos;
 	green *= cos;
 	blue *= cos;
 
-	couleurFinale.red = (int) red;
-	couleurFinale.green = (int) green;
-	couleurFinale.blue = (int) blue;
+	couleurFinale.setRed((int) red);
+	couleurFinale.setGreen((int) green);
+	couleurFinale.setBlue((int) blue);
 
 
 	return couleurFinale;

@@ -217,9 +217,9 @@ void Scene::lecture(){
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());// remove commas
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
 	    			cout << aP << " " << bP << " " << cP << endl;
-	    				colorBG.red = std::stoi(aP,&sz);
-	    				colorBG.green = std::stoi(bP,&sz);
-	    				colorBG.blue = std::stoi(cP,&sz);
+	    				colorBG.setRed(std::stoi(aP,&sz));
+	    				colorBG.setGreen(std::stoi(bP,&sz));
+	    				colorBG.setBlue(std::stoi(cP,&sz));
 						this->screen.setColor(colorBG);
 	    			break;
 	    		case 7 : // Light source position (x,y,z) and color(rgb): on lit 5 autres donnees
@@ -236,9 +236,9 @@ void Scene::lecture(){
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
-						colorLight.red = std::stoi(dP,&sz);
-						colorLight.green = std::stoi(eP,&sz);
-						colorLight.blue = std::stoi(fP,&sz);
+						colorLight.setRed(std::stoi(dP,&sz));
+						colorLight.setGreen(std::stoi(eP,&sz));
+						colorLight.setBlue(std::stoi(fP,&sz));
 						coordLight.setX(aF); coordLight.setY(bF); coordLight.setZ(cF);
 						this->light.setPosition(coordLight);
 						this->light.setColor(colorLight);
@@ -260,9 +260,9 @@ void Scene::lecture(){
 						bF = std::stof(bP,&sz);//coordy
 						cF = std::stof(cP,&sz);//coordz
 						dF = std::stof(dP,&sz);//radius
-						colorSphere.red = std::stoi(eP,&sz);//red
-						colorSphere.green = std::stoi(fP,&sz);//green
-						colorSphere.blue = std::stoi(gP,&sz);//blue
+						colorSphere.setRed(std::stoi(eP,&sz));//red
+						colorSphere.setGreen(std::stoi(fP,&sz));//green
+						colorSphere.setBlue(std::stoi(gP,&sz));//blue
 						hF = std::stof(hP,&sz);//reflex
 
 						coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
@@ -347,7 +347,7 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 					}
 					else{ //Pas dans la lumiere, on laisse couleur du fond
 						RGB coloration;
-						coloration.red=0;coloration.green=0;coloration.blue=0;
+						coloration.setRed(0);coloration.setGreen(0);coloration.setBlue(0);
 						tabPixels[i][j].setColor(coloration);
 					}
 				}
@@ -369,7 +369,7 @@ void Scene::write_image(){ //Creation du fichier ppm
 	{
 		for(unsigned int k(0); k < this->screen.getHorResolution(); ++k)
 		{
-			outfile<<tabPixels[j][k].getColor().red<<" "<< tabPixels[j][k].getColor().green<<" "<<tabPixels[j][k].getColor().blue<<"\t";
+			outfile<<tabPixels[j][k].getColor().getRed()<<" "<< tabPixels[j][k].getColor().getGreen()<<" "<<tabPixels[j][k].getColor().getBlue()<<"\t";
 		}
 		outfile<<"\n";
 	}

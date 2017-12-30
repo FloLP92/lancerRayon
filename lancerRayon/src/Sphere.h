@@ -1,33 +1,28 @@
-/*
- * Sphere.h
- *
- *  Created on: Nov 29, 2017
- *      Author: florian.le-pallec
- */
+//============================================================================
+// Name        : Sphere.h
+// Author      : DOISNEAU Vincent - LE PALLEC Florian
+// Version     : 1 (31 Janvier 2017)
+// Copyright   :
+// Description : Objet de type sphere (header)
+//============================================================================
 
 #ifndef SPHERE_H_
 #define SPHERE_H_
-#include "Struct.h"
 #include "Coord3.h"
+#include "RGB.h"
+#include "Object.h"
 
-class Sphere {
+class Sphere : public Object {
 private :
-	float radius;
-	Coord3 center;
-	float reflexion;
-	RGB color;
+	float radius; //rayon
 public:
-	Sphere();
-	Sphere(float chRadius, Coord3 chCenter, float chReflexion,RGB color);
+	Sphere() : Object(){}
+	Sphere(float chRadius, Coord3 chCenter, float chReflexion,RGB color) : Object(chCenter,color,chReflexion), radius(chRadius){}
 	virtual ~Sphere();
 	friend std::ostream& operator<<(std::ostream &out, const Sphere &a);
-
-
-	RGB getColor();
-	void setColor(RGB chColor);
+	void afficher(){};
+	//Getters and Setters
 	float getRadius();
-	Coord3 getCenter();
-	float getReflexion();
 };
 std::ostream& operator<<(std::ostream &out, const Sphere &a);
 #endif /* SPHERE_H_ */
