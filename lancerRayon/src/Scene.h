@@ -20,6 +20,7 @@ public:
 	void write_image();
 	void lecture();
 	bool eclaireParSource(Coord3 coordPoint);
+	bool eclaireParSource2(Coord3 coordPoint);
 	bool calculRayonSansRef(std::valarray<float> rayonIncident,Sphere s,Coord3 ptInter);
 	void imageSansReflexion();
 	/*getters & setters*/

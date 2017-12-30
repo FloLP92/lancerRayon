@@ -43,6 +43,9 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 			float s = -b/(2*a);
 			if(s>0)
 				solution.push_back(s);
+			else{
+				return boost::none;
+			}
 		}
 		if(delta>0){
 			float s1 = (-b-sqrt(delta))/(2*a);
@@ -83,7 +86,7 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
 	float b = 2 * ( vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ()) );
 	float c = (origineRayon.getX()-ptSphere.getX())*(origineRayon.getX()-ptSphere.getX()) + (origineRayon.getY()-ptSphere.getY())*(origineRayon.getY()-ptSphere.getY()) + (origineRayon.getZ()-ptSphere.getZ())*(origineRayon.getZ()-ptSphere.getZ())-RayonSphere*RayonSphere;
-	int solution; // On va stocker nos solutions reelles dedans
+	int solution=0; // On va stocker nos solutions reelles dedans
 	float delta = b*b-4*a*c; //calcul du delta
 
 	if(delta<0){
@@ -92,14 +95,26 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 	else
 	{
 		if(delta == 0){
-			return 1;
+			float s = -b/(2*a);
+			if(s>0)
+				solution++;
 		}
 		if(delta>0){
-			return 2;
+
+			float s1 = (-b-sqrt(delta))/(2*a);
+			float s2 = (-b+sqrt(delta))/(2*a);
+			if(s1>0){
+				solution = solution+1;
+			}
+			if(s2>0){
+				solution = solution+1;
+			}
 		}
 	}
-	return 0;
+	return solution;
 }
+
+
 
 
 float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
@@ -144,6 +159,31 @@ std::valarray<float> Rayon::calculVecteur(const Coord3 c1, const Coord3 c2)
 	vect[2] = (c2.getZ() - c1.getZ());
 	return vect;
 }
+
+Coord3 Rayon::calculRayonReflechi(Coord3 origine,Coord3 ptSurface,Coord3 centreSphere){
+	std::valarray<float> vect = Rayon::calculVecteur(origine,ptSurface);
+	vect = calculVecteurUnitaire(vect);
+
+	//vecteur normale
+	std::valarray<float> vect2 = Rayon::calculVecteur(centreSphere,ptSurface);
+	vect2 = calculVecteurUnitaire(vect2);
+
+	std::valarray<float> res = vect - vect2*( sqrt(vect[0]*vect[1]*vect[2] * sqrt(vect2[0]*vect2[1]*vect2[2] * Rayon::calculCos(centreSphere,ptSurface,origine) )))*2;
+
+	ptSurface.setX(ptSurface.getX()+res[0]);
+	ptSurface.setY(ptSurface.getY()+res[1]);
+	ptSurface.setZ(ptSurface.getZ()+res[2]);
+	return ptSurface;
+}
+std::valarray<float> Rayon::calculVecteurUnitaire(std::valarray<float> vecteur){
+	std::valarray<float> vectDirecteur = vecteur;
+	float normeVecteurDirecteur = sqrt(vectDirecteur[0]*vectDirecteur[0]+vectDirecteur[1]*vectDirecteur[1]+vectDirecteur[2]*vectDirecteur[2]);
+	vectDirecteur[0] = vectDirecteur[0]/normeVecteurDirecteur;
+	vectDirecteur[1] = vectDirecteur[1]/normeVecteurDirecteur;
+	vectDirecteur[2] = vectDirecteur[2]/normeVecteurDirecteur;
+	return vectDirecteur;
+}
+
 float Rayon::calculDistance(Coord3 c1, Coord3 c2){
 	float dist = sqrt(pow(c1.getX() - c2.getX(), 2)
 			+ pow(c1.getY() - c2.getY(), 2)
