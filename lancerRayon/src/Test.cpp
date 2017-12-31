@@ -65,7 +65,6 @@ void Test::testlectureEtInters()
 	cout << "coord pixel " << screen.getTabPixels()[1][3] << endl;
 	Sphere sphere = scene.getTabSphere()[0];
 	cout << "sphere " << sphere << endl;
-	boost::optional<Coord3*> inters = Rayon::calculPtIntersection(sphere.getCenter(), vectDirecteur, sphere.getRadius(),origine);
 }
 //Test de la lecture du fichier, son parsage et verification de ce que l'on a parser
 void Test::testParsing(){

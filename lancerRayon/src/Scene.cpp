@@ -97,8 +97,11 @@ void Scene::lecture(){
 
 	std::string line;
 	int dataRead = 0; // nombre de données lues
+
+	//Variables tampons qui seront utilisees pour stocker les donnees lues
 	string aP,bP,cP,dP,eP,fP,gP,hP,infos;
-	float aF,bF,cF,dF,eF,fF,gF,hF;
+	float aF,bF,cF,dF,hF;
+
 	std::string::size_type sz; //Variable used to convert string into float (or int)
 	Light l;
 	this->setLight(l);
@@ -140,7 +143,6 @@ void Scene::lecture(){
 	    			iss >> bP >> cP; // on place le reste des mots de la ligne dans les autres variables
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());//on supprime les ',' du mot (on ne veut retenir que les nombre,
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());// pas les virgules avec, utile quand on va passer de str a float)
-	    			cout << aP << " " << bP << " " << cP << endl; // on affiche ce qu'on obtient (pour la phase de test)
 
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
@@ -154,7 +156,6 @@ void Scene::lecture(){
 	    			iss >> bP >> cP;
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());// remove commas
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
-	    			cout << aP << " " << bP << " " << cP << endl;
 
 						aF = (float)std::stoi(aP,&sz);
 						bF = (float)std::stoi(bP,&sz);
@@ -166,7 +167,6 @@ void Scene::lecture(){
 	    			iss >> bP >> cP;
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());// remove commas
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
-	    			cout << aP << " " << bP << " " << cP << endl;
 
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
@@ -177,14 +177,12 @@ void Scene::lecture(){
 	    			iss >> bP >> cP;
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());// remove commas
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
-	    			cout << aP << " " << bP << " " << cP << endl;
 						aF = std::stof(aP,&sz);
 						bF = std::stof(bP,&sz);
 						cF = std::stof(cP,&sz);
 						bl.setX(aF); bl.setY(bF); bl.setZ(cF);
 	    			break;
 	    		case 5 : // screen horizontal resolution (on lit 1 donnee sur cette ligne)
-	    			cout << aP << endl;
 						horres = std::stoi(aP,&sz);
 						this->screen.setHorResolution(horres);
 	    			break;
@@ -192,7 +190,6 @@ void Scene::lecture(){
 	    			iss >> bP >> cP;
 	    			bP.erase (std::remove(bP.begin(), bP.end(),','), bP.end());// remove commas
 	    			cP.erase (std::remove(cP.begin(), cP.end(),','), cP.end());
-	    			cout << aP << " " << bP << " " << cP << endl;
 	    				colorBG.setRed(std::stoi(aP,&sz));
 	    				colorBG.setGreen(std::stoi(bP,&sz));
 	    				colorBG.setBlue(std::stoi(cP,&sz));
@@ -205,7 +202,6 @@ void Scene::lecture(){
 	    			dP.erase (std::remove(dP.begin(), dP.end(),','), dP.end());
 	    			eP.erase (std::remove(eP.begin(), eP.end(),','), eP.end());
 	    			fP.erase (std::remove(fP.begin(), fP.end(),','), fP.end());
-	    			cout << aP << " " << bP << " " << cP << " " << dP << " " << eP << " " << fP <<endl;
 
 						/*partie cast(string to float, puis float to int pour le RGB) */
 
@@ -230,7 +226,6 @@ void Scene::lecture(){
 	    			fP.erase (std::remove(fP.begin(), fP.end(),','), fP.end());
 	    			gP.erase (std::remove(gP.begin(), gP.end(),','), gP.end());// remove commas
 	    			hP.erase (std::remove(hP.begin(), hP.end(),','), hP.end());
-	    			cout << infos << " " << bP << " " << cP << " " << dP << " " << eP << " " << fP << " " << gP << " " << hP <<endl;
 
 						aF = std::stof(infos,&sz);//coordx
 						bF = std::stof(bP,&sz);//coordy
@@ -244,7 +239,6 @@ void Scene::lecture(){
 						coordSphere.setX(aF); coordSphere.setY(bF); coordSphere.setZ(cF);
 						Sphere sphere1 = Sphere(dF,coordSphere,hF,colorSphere);
 						this->tabSphere.push_back(sphere1);
-						std::cout<<this->getTabSphere().size()<<std::endl;
 						break;
 	    	}//end switch
 	    }// end if comment
@@ -326,14 +320,14 @@ void Scene::imageSansReflexion()//Calcul de l image sans reflexion
 						float cos = Rayon::calculCos(objet.getCenter(),pointInters,light.getPosition());
 						tabPixels[i][j].setColor(Rayon::calculCouleur(cos,objet.getColor(),light.getColor()));
 
-						//On garde les elements pour ensuite calculer plus tard la deuxieme reflexion
+						//On garde des elements pour ensuite calculer plus tard la deuxieme reflexion
 						pointsSource.push_back(pointInters);
 						Coord3 ptRayon = Rayon::calculRayonReflechi(light.getPosition(),pointInters,objet.getCenter());
 						pointsRayon.push_back(ptRayon);
 						couleurs.push_back(objet.getColor());
 
 					}
-					else{ //Pas dans la lumiere, on met la couleur noire
+					else{ //Pas dans la lumiere :  on met la couleur noire a la place
 						RGB coloration;
 						coloration.setRed(0);coloration.setGreen(0);coloration.setBlue(0);
 						tabPixels[i][j].setColor(coloration);

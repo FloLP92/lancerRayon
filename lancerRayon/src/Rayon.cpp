@@ -21,9 +21,6 @@ Rayon::~Rayon() {
 //Si pas de points, renvoie boost::none
 boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,float RayonSphere,Coord3 origineRayon){
 	//but trouver les coef de lequation de degre 2
-	//std::cout<<" x : "<<origineRayon.getX()<<" y : "<<origineRayon.getY()<<" z: "<<origineRayon.getZ()<<std::endl;
-	//std::cout<<" xx : "<<ptSphere.getX()<<" yy : "<<ptSphere.getY()<<" zz: "<<ptSphere.getZ()<<std::endl;
-	//std::cout<<" xxx : "<<vectDirecteur[0]<<" yyy : "<<vectDirecteur[1]<<" zzz: "<<vectDirecteur[2]<<std::endl;
 
 	float a = vectDirecteur[0]*vectDirecteur[0] + vectDirecteur[1]*vectDirecteur[1] + vectDirecteur[2]*vectDirecteur[2];
 	float b = 2 * ( vectDirecteur[0]*(origineRayon.getX()-ptSphere.getX()) + vectDirecteur[1]*(origineRayon.getY()-ptSphere.getY()) + vectDirecteur[2]*(origineRayon.getZ()-ptSphere.getZ()) );
@@ -36,7 +33,6 @@ boost::optional<Coord3*> Rayon::calculPtIntersection(Coord3 ptSphere,std::valarr
 	}
 	else
 	{
-		//std::cout<<"heelo a:"<<a<<"b:"<<b<<"c:"<<c<<"delta :"<<delta<<std::endl;
 		if(delta == 0){
 			float s = -b/(2*a);
 			if(s>0)
@@ -115,18 +111,23 @@ int Rayon::nbPtIntersection(Coord3 ptSphere,std::valarray<float> vectDirecteur,f
 
 // calcul le cosinus entre la normale d'une sphere et l'angle d'incidence
 float Rayon::calculCos(Coord3 position, Coord3 surface,Coord3 sourceLumineuse){
-		float scalaire = ((position.getX() - surface.getX()) * (sourceLumineuse.getX() - surface.getX())
-				+ (position.getY() - surface.getY()) * (sourceLumineuse.getY() - surface.getY())
-				+ (position.getZ() - surface.getZ()) * (sourceLumineuse.getZ() - surface.getZ()));
 
-		float normeN = sqrt(pow(position.getX() - surface.getX(), 2)
-				+ pow(position.getY() - surface.getY(), 2)
-				+ pow(position.getZ() - surface.getZ(), 2));
+	//Calcul du produit scalaire entre les deux vecteurs ( rayon incident et normale au point de reflexion)
+	float scalaire = ((position.getX() - surface.getX()) * (sourceLumineuse.getX() - surface.getX())
+		+ (position.getY() - surface.getY()) * (sourceLumineuse.getY() - surface.getY())
+		+ (position.getZ() - surface.getZ()) * (sourceLumineuse.getZ() - surface.getZ()));
 
-		float normeR = sqrt(pow(sourceLumineuse.getX() - surface.getX(), 2)
-				+ pow(sourceLumineuse.getY() - surface.getY(), 2)
-				+ pow(sourceLumineuse.getZ() - surface.getZ(), 2));
+	//Norme de la normale ||(x,y,z)|| = x^2+y^2+z^2
+	float normeN = sqrt(pow(position.getX() - surface.getX(), 2)
+		+ pow(position.getY() - surface.getY(), 2)
+		+ pow(position.getZ() - surface.getZ(), 2));
 
+		//Norme du rayon incident ||(x,y,z)|| = x^2+y^2+z^2
+	float normeR = sqrt(pow(sourceLumineuse.getX() - surface.getX(), 2)
+		+ pow(sourceLumineuse.getY() - surface.getY(), 2)
+		+ pow(sourceLumineuse.getZ() - surface.getZ(), 2));
+
+	//On remet en positive si la valeur trouvée est négative
 	float cosinus = 	scalaire/(normeN * normeR);
 	cosinus = sqrt(cosinus*cosinus);
 	return cosinus;
